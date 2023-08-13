@@ -1,3 +1,4 @@
+{% block body %}
 <!DOCTYPE html>
 <html lang="en">
 <header class="header01">
@@ -9,6 +10,9 @@
 </header>
 <body class=bodyint>
     <div class="divform">
+    
+        <h2>Bienvenido, {{current_user.fullname}}</h2>
+
    <p></p>
     <a href="guardarPaciente" class="button2">REGISTRAR PACIENTE</a>
     <p></p>
@@ -32,5 +36,18 @@
 
 </div>
 </body>
+{%with mensajes=get_flashed_messages()%}
+{%if mensajes%}
+{%for msj in mensajes%}
+
+<script>Swal.fire({
+    "title":"Listo!",
+    "text":"{{msj}}",
+    "icon":"success"})</script>
+
+{%endfor%}
+{%endif%}
+{%endwith%}
 <footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

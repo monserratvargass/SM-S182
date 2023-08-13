@@ -1,5 +1,7 @@
 
 
+{% block men %}
+<!DOCTYPE html>
 <html>
     <title> Inicio de sesión </title>
     <link href="Estilos.css" rel="stylesheet">
@@ -42,23 +44,35 @@
 <div id="divform"><p> 
     <h3></h3>
     <form action="/login" method="post">
-        <ul>
-         
-            <label for="RFC">RFC:</label>
-            <input type="text"  name="nombre" required />
+
+            {%with mensajes=get_flashed_messages()%}
+            {%if mensajes%}
+                {%for message in mensajes%}
+            
+                    <script>Swal.fire({
+                      "title":"Error!",
+                      "text":"{{message}}",
+                      "icon":"error"})</script>
+      
+                {%endfor%}
+            {%endif%}
+            {%endwith%}
+
+            <ul>
+            <label for="rfc">RFC:</label>
+            <input type="text" name="rfc" placeholder="Ingresa tu RFC">
           
           <p></p>
           
-            <label for="Contraseña">Contraseña:</label>
-            <input type="password"  name="password" required/>
+            <label for="contra">Contraseña:</label>
+            <input type="password" name="contraseña" placeholder="Ingresa tu contraseña">
           
         
           <p></p>
           <p></p>
-          <class="button">
-            <button type="submit">ENTRAR</button>
-            <class="button">
-                <button type="submit">CANCELAR</button>
+          <br><label for="label"> </label></br>
+
+          <button type="submit" onclick="">LOGIN</button>
                
           
         </ul>
@@ -69,3 +83,4 @@
 
    </body>
    </html>
+{% endblock %}
