@@ -1,0 +1,38 @@
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<link link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<div class="containerM">
+    
+
+<title>Inicio</title>
+
+<h1>INICIO</h1>
+
+<h2>Bienvenido, {{current_user.fullname}}</h2>
+<br>
+<br>
+<a href="logout" class="button1">Logout</a>
+
+
+<body>
+
+</body>
+{%with mensajes=get_flashed_messages()%}
+{%if mensajes%}
+{%for msj in mensajes%}
+
+<script>Swal.fire({
+    "title":"Listo!",
+    "text":"{{msj}}",
+    "icon":"success"})</script>
+
+{%endfor%}
+{%endif%}
+{%endwith%}
+
+</div>
+</html>
+{% endblock %}
