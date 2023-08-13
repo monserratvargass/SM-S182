@@ -59,14 +59,18 @@
           <thead>
           <tr>
               <th><label1>ID</label1></th>
-              <th><label1>id_medico</label1></th>
-              <th><label1>id_persona</label1></th>
-              <th><label1>Fecha_nacimiento</label1></th>
-              <th><label1>Antecedentes_familiares</label1></th>
-              <th><label1>alergias</label1></th>
+              <!--DATOS OBLIGATORIOS-->
+              <th><label1><!--id_medico-->Medico que atiende</label1></th>
+              <th><label1><!--Nombre completo del paciente-->Nombre</label1></th>
+              <th><label1>Apellido paterno</label1></th>
+              <th><label1>Apellido materno</label1></th>
+              <th><label1>Fecha de nacimiento</label1></th>
+              <!--DATOS OOPCIONALES-->
+              <th><label1>Enfermedades cronicas</label1></th>
+              <th><label1>Alergias</label1></th>
               <th><label1>Enfermedades_cronicas</label1></th>
-              <th><label1>id_exploracion</label1></th>
-              <th><label1>id_diagnostico</label1></th>
+              <th><label1>Antecedentes familiares</label1></th>
+              <th><label1>Editar</label1></th>
           </tr>
           </thead>
           <tr>
@@ -89,6 +93,9 @@
                 <td>{{ alb.5 }}</td>
                 <td>{{ alb.6 }}</td>
                 <td>{{ alb.7 }}</td>
+                <td>{{ alb.8 }}</td>
+                <td>{{ alb.9 }}</td>
+                <td>{{ alb.10 }}</td>
                 <td>
 
                 </tr>
