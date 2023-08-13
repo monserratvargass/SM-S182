@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <title> Diagnóstico paciente </title>
+   
+<header id="header01">
+  <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
+  <h3>Diagnóstico</h3>
+</header>
+    <div>
+    <style>
+         #bodyint{
+    background-color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    color: cornsilk;
+}
+#header01{
+    border: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    background-color: rgb(33, 2, 75);}
+
+#divform{
+    color:rgb(33, 2, 75) ; 
+    border-bottom: 3px solid darkgray;
+    border-top: 3px solid darkgray;
+    border-left: 3px solid darkgray;
+    border-right: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    }
+
+    #div2{
+               color:rgb(33, 2, 75) ;
+    }
+#footer{
+    text-align: center;
+    color: black;
+}
+      </style>
+</header>
+<nav></nav>
+
+<body id=bodyint>
+   <div id="divform">
+<form action="/my-handling-form-page" method="post">
+    <ul>
+      
+        <label for="sint">Síntomas</label>
+        <input type="text" id="sint" medico="user_sint" required/>
+      
+      <p></p>
+      
+      <label for="dx">Dx</label>
+        <input type="text" id="dx" paciente="user_dx" required/>
+      
+      <p></p>
+      <p></p>
+    </div>
+    
+        <p></p>
+        <div id="divform">
+            <h4>Tratamiento</h4>
+        <label for="med">Medicamentos:</label>
+        <input type="text" id="med" name="user_med" required/>
+     
+      <p></p>
+      
+        <label for="ind">Indicaciones:</label>
+        <input type="text" id="ind" name="user_ind" required/>
+      
+      <p></p>
+      <p></p>
+    </div>
+        <p></p>
+        <div id="divform">
+              
+        <h4>Solicitud de estudios</h4>
+        <label for="TS">Tipo de solicitud:</label>
+        <input type="text" id="TS" FN="user_TS" required />
+      
+      <p></p>
+    </div>
+      
+      <p></p>
+      <p></p>
+      <class="button">
+        <button type="submit">GUARDAR</button>
+        <class="button">
+          <a href=/menu_usuario><button type="button"> CANCELAR </button></a>
+           
+      
+    </ul>
+  </form>
+</div>
+</body>
+</div>
+<div>
+  <p></p>
+</div>
+<footer id="footer">2023 | Todos los derechos reservados </footer>
+</html>

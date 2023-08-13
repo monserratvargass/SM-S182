@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+   <title> Expediente paciente </title>
+<header class="header01">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
+  <h3>Expediente paciente</h3>
+</header>
+    <div>
+    <style>
+      </style>
+</header>
+<nav></nav>
+
+<body class=bodyint>
+ 
+   <div class="divform">
+<form action="/guardarPaciente" method="POST">
+    <ul>
+      
+        <label for="medico">Médico (ID):</label>
+        <input type="text" name="medico"  required/>
+      
+      <p></p>
+      
+    
+      <label for="paciente">Nombre del paciente:</label>
+        <input type="text" name="paciente" required/>
+      
+      <p></p>
+
+        <label for="AP">Apellido Paterno:</label>
+        <input type="text" name="AP" required/>
+     
+      <p></p>
+      
+        <label for="AM">Apellido Materno:</label>
+        <input type="text" name="AM" required/>
+      
+      <p></p>
+      
+        <label for="FN">Fecha nacimiento:</label>
+        <input type="date" name="FN" required/>
+      
+      <p></p>
+    </div>
+    <div class="div2">
+        <p></p>
+        <h4>Datos opcionales</h4>
+    </div>
+    <div class="divform">
+      <p></p>
+      <p></p>
+        <label for="EC">Enfermedades crónicas:</label>
+        <input type="text" name="EC" />
+      
+      <p></p>
+     
+        <label for="AL">Alergias:</label>
+        <input type="text" name="AL" />
+     
+      <p></p>
+      
+        <label for="AF">Antecedentes familiares:</label>
+        <input type="text" name="AF" />
+      
+    
+      <p></p>
+      <p></p>
+      <p></p>
+      <class="button">
+        <button type="submit">GUARDAR</button>
+        <class="button">
+          <a href=/menu_usuario><button type="button"> CANCELAR </button></a>
+           
+            <p></p>
+      <p></p>
+    </ul>
+  </form>
+</div>
+{%with mensajes=get_flashed_messages()%}
+{% if mensajes%}
+  {%for msj in mensajes%}
+  <h3> {{msj}} </h3>
+  {%endfor%}
+{%endif%}
+{%endwith%}
+
+</body>
+</div>
+<div>
+  <p></p>
+</div>
+<footer class="footer">2023 | Todos los derechos reservados </footer>
+</html>

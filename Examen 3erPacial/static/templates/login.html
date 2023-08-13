@@ -1,0 +1,71 @@
+
+
+<html>
+    <title> Inicio de sesión </title>
+    <link href="Estilos.css" rel="stylesheet">
+<body id="bodyint">
+ <header id="header01">
+         <h2> SISTEMA DE GESTIÓN MÉDICA </h2>
+         <h3> Iniciar sesión </h3>
+         <style>
+            #bodyint{
+    background-color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    color: cornsilk;
+}
+#header01{
+    border: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    background-color: rgb(33, 2, 75);}
+
+#divform{
+    color:rgb(33, 2, 75) ; 
+    border-bottom: 3px solid darkgray;
+    border-top: 3px solid darkgray;
+    border-left: 3px solid darkgray;
+    border-right: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    }
+
+#footer{
+    text-align: center;
+    color: black;
+}
+         </style>
+</header>
+<p></p>
+<div id="divform"><p> 
+    <h3></h3>
+    <form action="/login" method="post">
+        <ul>
+         
+            <label for="RFC">RFC:</label>
+            <input type="text"  name="nombre" required />
+          
+          <p></p>
+          
+            <label for="Contraseña">Contraseña:</label>
+            <input type="password"  name="password" required/>
+          
+        
+          <p></p>
+          <p></p>
+          <class="button">
+            <button type="submit">ENTRAR</button>
+            <class="button">
+                <button type="submit">CANCELAR</button>
+               
+          
+        </ul>
+      </form>
+</p></div>
+
+    <footer id="footer"><p>2023| Todos los derechos reservados</p></footer>
+
+   </body>
+   </html>

@@ -1,0 +1,28 @@
+.bodyint{
+    background-color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    color: cornsilk;
+}
+.header01{
+    border: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    background-color: rgb(33, 2, 75);}
+
+.divform{
+    color:rgb(33, 2, 75) ; 
+    border-bottom: 3px solid darkgray;
+    border-top: 3px solid darkgray;
+    border-left: 3px solid darkgray;
+    border-right: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    }
+
+.footer{
+    text-align: center;
+    color: black;
+}

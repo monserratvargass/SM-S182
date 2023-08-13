@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" type="txt/css" href="{{ url_for('static',filename='css/main.css') }}">
+  <title> Actualización datos del usuario </title>
+<header id="header01">
+  <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
+  <h3>Actualizar datos del usuario</h3> </header>
+    <div>
+    <style>
+    #bodyint{
+    background-color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    color: cornsilk;
+}
+#header01{
+    border: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    background-color: rgb(33, 2, 75);}
+
+#divform{
+    color:rgb(33, 2, 75) ; 
+    border-bottom: 3px solid darkgray;
+    border-top: 3px solid darkgray;
+    border-left: 3px solid darkgray;
+    border-right: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+  
+    }
+
+#footer{
+    text-align: center;
+    color: black;
+}
+
+    
+      </style>
+</header>
+<nav></nav>
+
+<body id="bodyint">
+    <h1>     </h1>
+    <section></section>
+<aside></aside>
+<div id="divform">
+<form action="/my-handling-form-page" method="post">
+    <ul>
+        
+            <label for="id">ID:</label>
+            <input type="text" id="id" RFC="user_ID" required/>
+          
+          <p></p>
+      
+        <label for="nombre">Nombres(s):</label>
+        <input type="text" id="nombre" RFC="user_nombre" required/>
+      
+      <p></p>
+      
+        <label for="AP">Apellido Paterno:</label>
+        <input type="text" id="AP" name="user_AP" required/>
+      
+      <p></p>
+      
+        <label for="AM">Apellido Materno:</label>
+        <input type="text" id="AM" name="user_AM" required/>
+      
+      <p></p>
+      
+        <label for="CP">Cédula Profesional:</label>
+        <input type="text" id="CP" name="user_CP" required/>
+     
+      <p></p>
+      
+        <label for="pass">Contraseña:</label>
+        <input type="password" id="pass" name="user_pass" required/>
+      
+      <p></p>
+      
+        <label for="CE">Correo electrónico:</label>
+        <input type="text" id="CE" name="user_CE" required/>
+     
+      <p></p>
+     
+        <label for="rol">Rol:</label>
+        <input type="text" id="rol" name="user_rol" required/>
+      
+    
+      <p></p>
+      <p></p>
+      <p></p>
+      <class="button">
+        <button type="submit">GUARDAR</button>
+        <class="button">
+          <a href=/menu_admin><button type="button"> CANCELAR </button></a>
+            
+      
+    </ul>
+  </form>
+  </body>
+</div>
+</body>
+</div>
+<div>
+  <p></p>
+</div>
+<footer id="footer">2023 | Todos los derechos reservados </footer>
+</html>

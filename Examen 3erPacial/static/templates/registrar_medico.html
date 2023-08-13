@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+  <title> Registrar usuario </title>
+   
+<header class="header01">
+  <meta charset="UTF-8">
+    <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
+  <h3>Registrar usuario</h3>
+</header>
+    <div>
+    <style>
+      </style>
+</header>
+<nav></nav>
+
+<body class=bodyint>
+   <div class="divform">
+<form action="/guardarMedico" method="POST">
+    <ul>
+      
+        <label for="nombre">Nombres(s):</label>
+        <input type="text" name="nombre" RFC="user_nombre" required/>
+      
+      <p></p>
+      
+        <label for="AP">Apellido Paterno:</label>
+        <input type="text" name="AP" name="user_AP" required />
+     
+      <p></p>
+      
+        <label for="AM">Apellido Materno:</label>
+        <input type="text" name="AM" name="user_AM" required/>
+      
+      <p></p>
+      
+        <label for="CP">Cédula Profesional:</label>
+        <input type="text" name="CP" name="user_CP" required />
+      
+      <p></p>
+      
+        <label for="pass">Contraseña:</label>
+        <input type="password" name="pass" name="user_pass" required/>
+      
+      <p></p>
+     
+        <label for="CE">Correo electrónico:</label>
+        <input type="text" name="CE" name="user_CE" required/>
+     
+      <p></p>
+      
+        <label for="rol">Rol:</label>
+        <input type="text" name="rol" name="user_rol" required/>
+      
+    
+      <p></p>
+      <p></p>
+      <p></p>
+      <class="button">
+        <button type="submit">GUARDAR</button>
+        <class="button">
+          <a href=/menu_admin><button type="button"> CANCELAR </button></a>
+           
+      
+    </ul>
+  </form>
+  {%with mensajes=get_flashed_messages()%}
+  {% if mensajes%}
+    {%for msj in mensajes%}
+    <h3> {{msj}} </h3>
+    {%endfor%}
+  {%endif%}
+  {%endwith%}
+</div>
+
+</body>
+</div>
+<div>
+  <p></p>
+</div>
+<footer class="footer">2023 | Todos los derechos reservados </footer>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <title> Consultar citas </title>
+   
+<header id="header01">
+  <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
+  <h3>Consultar citas</h3>
+</header>
+    <div>
+    <style>
+         #bodyint{
+    background-color: whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+    color: cornsilk;
+}
+#header01{
+    border: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    background-color: rgb(33, 2, 75);}
+
+#divform{
+    color:rgb(33, 2, 75) ; 
+    border-bottom: 3px solid darkgray;
+    border-top: 3px solid darkgray;
+    border-left: 3px solid darkgray;
+    border-right: 3px solid darkgray;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 10px;
+    }
+
+#footer{
+    text-align: center;
+    color: black;
+}
+      </style>
+</header>
+
+
+<body id=bodyint>
+   <div id="divform">
+<form action="/my-handling-form-page" method="post">
+    <nav>
+    <ul>
+        <p></p>
+<H4> Consultar cita</H4>
+<p></p>
+        <label for="exp">Expediente:</label>
+        <input type="text" id="exp" name="user_exp" />
+      
+      <p></p>        
+
+
+<p></p>
+        <label for="nombre">Nombres (s):</label>
+        <input type="text" id="nombre" name="user_nombre" />
+      
+        <p></p>
+      
+        <ul>
+          <table>
+            <thead>
+            <tr>
+                <th><label1>ID</label1></th>
+                <th><label1>id_medico</label1></th>
+                <th><label1>id_persona</label1></th>
+                <th><label1>Fecha_nacimiento</label1></th>
+                <th><label1>Antecedentes_familiares</label1></th>
+                <th><label1>alergias</label1></th>
+                <th><label1>Enfermedades_cronicas</label1></th>
+                <th><label1>id_exploracion</label1></th>
+                <th><label1>id_diagnostico</label1></th>
+            </tr>
+            </thead>
+            <tr>
+                <td>-</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tbody>
+              {%for alb in tbcita %}
+              <tr>
+                  <td>{{ alb.0 }}</td>
+                  <td>{{ alb.1 }}</td>
+                  <td>{{ alb.2 }}</td>
+                  <td>{{ alb.3 }}</td>
+                  <td>{{ alb.4 }}</td>
+                  <td>{{ alb.5 }}</td>
+                  <td>{{ alb.6 }}</td>
+                  <td>{{ alb.7 }}</td>
+                  <td>
+     
+      <p></p>
+          
+      <p></p>
+      <p></p>
+      <p></p>
+      <class="button">
+        <button type="submit">CONSULTAR</button>
+        <class="button">
+          <a href=/menu_usuario><button type="button"> CANCELAR </button></a>
+            <button type="submit">REIMPRIMIR RECETA</button>
+    
+           
+      
+    </ul>  
+</nav>
+  </form>
+</div>
+</body>
+</div>
+<div>
+  <p></p>
+</div>
+<footer id="footer">2023 | Todos los derechos reservados </footer>
+</html>
