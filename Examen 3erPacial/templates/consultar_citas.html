@@ -42,18 +42,12 @@
 
 <body id=bodyint>
    <div id="divform">
-<form action="/my-handling-form-page" method="post">
+<form action="/consultarCita" method="post">
     <nav>
     <ul>
         <p></p>
 <H4> Consultar cita</H4>
-<p></p>
-        <label for="exp">Expediente:</label>
-        <input type="text" id="exp" name="user_exp" />
-      
-      <p></p>        
-
-
+<p></p>     
 <p></p>
         <label for="nombre">Nombres (s):</label>
         <input type="text" id="nombre" name="user_nombre" />
@@ -65,18 +59,16 @@
             <thead>
             <tr>
                 <th><label1>ID</label1></th>
-                <th><label1>id_medico</label1></th>
-                <th><label1>id_persona</label1></th>
-                <th><label1>Fecha_nacimiento</label1></th>
-                <th><label1>Antecedentes_familiares</label1></th>
-                <th><label1>alergias</label1></th>
-                <th><label1>Enfermedades_cronicas</label1></th>
-                <th><label1>id_exploracion</label1></th>
-                <th><label1>id_diagnostico</label1></th>
+                <th><label1>Nombre</label1></th>
+                <th><label1>Apellido Paterno</label1></th>
+                <th><label1>Apellido Materno</label1></th>
+                <th><label1>Nombre completo</label1></th> <!--Opcion de nombre completo en lugar de que sea individual-->
+                <th><label1>Fecha de la cita</label1></th>
+                <th><label1>Reimprimir receta</label1></th>
             </tr>
             </thead>
             <tr>
-                <td>-</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -94,7 +86,6 @@
                   <td>{{ alb.4 }}</td>
                   <td>{{ alb.5 }}</td>
                   <td>{{ alb.6 }}</td>
-                  <td>{{ alb.7 }}</td>
                   <td>
      
       <p></p>

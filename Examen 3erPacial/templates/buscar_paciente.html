@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-  <title> Consultar médico </title>
+  <title> Buscar paciente </title>
    
 <header id="header01">
   <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
-  <h3>Consultar médico</h3>
+  <h3>Buscar paciente</h3>
 </header>
     <div>
     <style>
@@ -42,28 +42,29 @@
 
 <body id=bodyint>
    <div id="divform">
-<form action="/consultarMedico" method="post">
+<form action="/buscarPaciente" method="post">
     <nav>
     <ul>
+        <h4>Búsqueda de paciente</h4> 
         <p></p>
-<H4> Consultar médicos </H4>
-        <p></p>
-        <label for="nombre">Nombres(s):</label>
-        <input type="text" id="nombre" name="user_nombre" />
       
+
+        <label for="exp">Expediente:</label>
+        <input type="text" id="exp" name="user_exp" />
+      
+     
         <ul>
           <table>
             <thead>
             <tr>
                 <th><label1>ID</label1></th>
-                <th><label1>id_medico</label1></th>
-                <th><label1>id_persona</label1></th>
-                <th><label1>Fecha_nacimiento</label1></th>
-                <th><label1>Antecedentes_familiares</label1></th>
-                <th><label1>alergias</label1></th>
-                <th><label1>Enfermedades_cronicas</label1></th>
-                <th><label1>id_exploracion</label1></th>
-                <th><label1>id_diagnostico</label1></th>
+                <th><label1>Nombre</label1></th>
+                <th><label1>Apellido Paterno</label1></th>
+                <th><label1>Apellido Materno</label1></th>
+                <th><label1>Fecha de nacimiento</label1></th>
+                <th><label1>Enfermedades cronicas</label1></th>
+                <th><label1>Alergias</label1></th>
+                <th><label1>Antecedentes familiares</label1></th>
             </tr>
             </thead>
             <tr>
@@ -76,7 +77,7 @@
                 <td></td>
             </tr>
             <tbody>
-              {%for alb in tbcita %}
+              {%for alb in busqpac %}
               <tr>
                   <td>{{ alb.0 }}</td>
                   <td>{{ alb.1 }}</td>
@@ -101,7 +102,7 @@
       <p></p>
       <p></p>
       <class="button">
-        <button type="submit">CONSULTAR</button>
+        <button type="submit">BUSCAR MÉDICO </button>
         <a href=/menu_admin><button type="button"> CANCELAR </button></a>
     
            

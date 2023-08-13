@@ -154,7 +154,16 @@ def buscarMedico():
     busqueda=curBusq.fetchall()
     return render_template('buscar_medico.html', busqmed=busqueda)
 
+@app.route('/buscarPaciente',methods=['GET','POST'])
+def buscarPaciente():
+    Bexp=request.form.get('user_exp')
+    curBusq=mysql.connection.cursor()
+    curBusq.execute('select * from expediente where expediente LIKE %s', (f'%{Bexp}%',))
+    busqueda=curBusq.fetchall()
+    return render_template('buscar_paciente.html', busqpac=busqueda)
+
 #Consultar todas las citas que ha tenido el paciente, filtrada por el nombre del paciente y/o fecha de la cita
+#Unicamente debe aparecer nombre del paciente y la fecha de la cita
 @app.route('/consultarCita',methods=['GET','POST'])
 def consultarCita():
     Cnom=request.form.get('user_nombre')
@@ -166,10 +175,10 @@ def consultarCita():
         Ccitas=curSelect.fetchall()
     return render_template('consultar_citas.html',tbcita=Ccitas)
 
-@app.route('/consultarCita',methods=['GET','POST'])
-def consultarCita():
+@app.route('/consultarMedico',methods=['GET','POST'])
+def consultarMedico():
 
-    return render_template('consultar_citas.html')
+    return render_template('consultar_medico.html')
 
 @app.route('/consultarPaciente',methods=['GET','POST'])
 def consultarPaciente():
