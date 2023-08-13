@@ -71,19 +71,12 @@ def login():
 
 @app.route('/menu_admin')
 def menu_admin():
-    if current_user.is_authenticated and current_user.role == 'admin':
-        # Renderizar el panel de administrador
         return render_template('menu_admin.html')
-    else:
-        return redirect(url_for('login'))
 
-@app.route('/menu_usuarios')
-def menu_usuarios():
-    if current_user.is_authenticated and current_user.role == 'user':
+@app.route('/menu_usuario')
+def menu_usuario():
         # Renderizar el panel de usuario
         return render_template('menu_usuario.html')
-    else:
-        return redirect(url_for('login'))
 
     
 @app.route('/logout')
