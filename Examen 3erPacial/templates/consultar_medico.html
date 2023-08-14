@@ -56,18 +56,18 @@
             <thead>
             <tr>
                 <th><label1>ID</label1></th>
-                <th><label1>id_medico</label1></th>
-                <th><label1>id_persona</label1></th>
-                <th><label1>Fecha_nacimiento</label1></th>
-                <th><label1>Antecedentes_familiares</label1></th>
-                <th><label1>alergias</label1></th>
-                <th><label1>Enfermedades_cronicas</label1></th>
-                <th><label1>id_exploracion</label1></th>
-                <th><label1>id_diagnostico</label1></th>
+                <th><label1>Nombre</label1></th>
+                <th><label1>Apellido aterno</label1></th>
+                <th><label1>Apellido materno</label1></th>
+                <th><label1>RFC</label1></th>
+                <th><label1>Cedula profesional</label1></th>
+                <th><label1>Correo</label1></th>
+                <th><label1>Contraseña</label1></th>
+                <th><label1>Rol</label1></th>
             </tr>
             </thead>
             <tr>
-                <td>-</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -76,7 +76,7 @@
                 <td></td>
             </tr>
             <tbody>
-              {%for alb in tbcita %}
+              {%for alb in tbmedico %}
               <tr>
                   <td>{{ alb.0 }}</td>
                   <td>{{ alb.1 }}</td>

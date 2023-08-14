@@ -168,22 +168,26 @@ def buscarPaciente():
 def consultarCita():
     Cnom=request.form.get('user_nombre')
     curSelect=mysql.connection.cursor()
-    curSelect.execute('select id from persona where nombre=? ',(Cnom,))
-    consulta=curSelect.fetchone()
-    if consulta:
-        curSelect.execute('select * from expediente_paciente where id_persona=?',(consulta[0],))
-        Ccitas=curSelect.fetchall()
+    '''curSelect.execute('select id from persona where nombre=? ',(Cnom,))
+    consulta=curSelect.fetchone()'''
+    #if consulta:
+    curSelect.execute('select exp_paciente.nombre,exp_paciente.ap,exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exp_paciente.id_exploracion=exp_paciente.id_exploracion where exp_paciente.nombre LIKE %s',(f'%{Cnom}%',))
+    Ccitas=curSelect.fetchall()
     return render_template('consultar_citas.html',tbcita=Ccitas)
 
 @app.route('/consultarMedico',methods=['GET','POST'])
 def consultarMedico():
-
-    return render_template('consultar_medico.html')
+    curSelect=mysql.connection.cursor()
+    curSelect.execute('select * from medico')
+    consulta=curSelect.fetchall()
+    return render_template('consultar_medico.html', tbmedico=consulta)
 
 @app.route('/consultarPaciente',methods=['GET','POST'])
 def consultarPaciente():
-
-    return render_template('consultar_paciente.html')
+    curSelect=mysql.connection.cursor()
+    curSelect.execute('select * from exp_paciente')
+    consulta=curSelect.fetchall()
+    return render_template('consultar_paciente.html', tbpacientes=consulta)
 
 @app.route('/descargarReceta',methods=['GET','POST'])
 def descargarReceta():
