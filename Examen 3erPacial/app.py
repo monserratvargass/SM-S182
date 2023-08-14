@@ -117,14 +117,15 @@ def guardarMedico():
         _nombre=request.form['nombre']
         _ap=request.form['AP']
         _am=request.form['AM']
+        _rfc=request.form['RFC']
         _cp=request.form['CP']
-        _pass=request.form['pass']
         _ce=request.form['CE']
+        _pass=request.form['pass']
         _rol=request.form['rol']
         #print(titulo,artista,anio)
         CS=mysql.connection.cursor()
-        CS.execute('insert into registrar_usuario(nombre,ap,am,cedulap,contrasena,correo,rol) values(%s,%s,%s,%s,%s,%s,%s)',
-                   (_nombre,_ap,_am,_cp,_pass,_ce,_rol)) #Para ejecutar codigo sql, y pasamos parametros
+        CS.execute('insert into registrar_usuario(nombre,ap,am,rfc,ced_prof,correo,contrasena,rol) values(%s,%s,%s,%s,%s,%s,%s,%s)',
+                   (_nombre,_ap,_am,_rfc,_cp,_ce,_pass,_rol)) #Para ejecutar codigo sql, y pasamos parametros
         mysql.connection.commit()
 
     flash('Médico registrado exitosamente')

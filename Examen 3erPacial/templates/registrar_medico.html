@@ -20,7 +20,7 @@
     <ul>
       
         <label for="nombre">Nombres(s):</label>
-        <input type="text" name="nombre" RFC="user_nombre" required/>
+        <input type="text" name="nombre" name="user_nombre" required/>
       
       <p></p>
       
@@ -34,24 +34,32 @@
       
       <p></p>
       
+        <label for="RFC">RFC:</label>
+        <input type="text" name="RFC" name="user_RFC" required/>
+      
+      <p></p>
+
         <label for="CP">Cédula Profesional:</label>
         <input type="text" name="CP" name="user_CP" required />
+      
+      <p></p>
+
+        <label for="CE">Correo electrónico:</label>
+        <input type="text" name="CE" name="user_CE" required/>
       
       <p></p>
       
         <label for="pass">Contraseña:</label>
         <input type="password" name="pass" name="user_pass" required/>
-      
-      <p></p>
-     
-        <label for="CE">Correo electrónico:</label>
-        <input type="text" name="CE" name="user_CE" required/>
      
       <p></p>
       
         <label for="rol">Rol:</label>
-        <input type="text" name="rol" name="user_rol" required/>
-      
+        <!--<input type="text" name="rol" name="user_rol" required/>-->
+        <select class="custom-select", name="opcion">
+          <option value="medico-admin">Medico administrador</option>
+          <option value="medico-general">Medico general</option>
+        </select>
     
       <p></p>
       <p></p>
