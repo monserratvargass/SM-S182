@@ -45,27 +45,27 @@
 
 <body id=bodyint>
    <div id="divform">
-<form action="/my-handling-form-page" method="post">
+<form action="/actualizarPaciente/{{ edpac.0 }}" method="post">
     <ul>   
       <p></p>
       
       <label for="paciente">Nombre del paciente:</label>
-        <input type="text" id="paciente" paciente="user_paciente" required/>
+        <input type="text" name="paciente" name="user_paciente" value="{{ edpac.1 }}" required/>
       
       <p></p>
 
         <label for="AP">Apellido Paterno:</label>
-        <input type="text" id="AP" name="user_AP" required/>
+        <input type="text" id="AP" name="user_AP" value="{{ edpac.2 }}" required/>
      
       <p></p>
       
         <label for="AM">Apellido Materno:</label>
-        <input type="text" id="AM" name="user_AM" required/>
+        <input type="text" id="AM" name="user_AM" value="{{ edpac.3 }}" required/>
       
       <p></p>
       
         <label for="FN">Fecha nacimiento:</label>
-        <input type="text" id="FN" FN="user_FN" required/>
+        <input type="text" id="FN" FN="user_FN" value="{{ edpac.4 }}" required/>
       
       <p></p>
     </div>
@@ -74,20 +74,21 @@
         <h4>Datos opcionales</h4>
     </div>
     <div id="divform">
+
+            
+      <label for="AF">Antecedentes familiares:</label>
+      <input type="text" id="AF" AF="user_AF" />
         <p></p>
-      <p></p>
-        <label for="EC">Enfermedades crónicas:</label>
-        <input type="text" id="EC" EC="user_EC" />
-      
-      <p></p>
+
+        <p></p>
      
         <label for="AL">Alergias:</label>
         <input type="text" id="AL" AL="user_AL" />
-     
-      <p></p>
+
+        <p></p>
       
-        <label for="AF">Antecedentes familiares:</label>
-        <input type="text" id="AF" AF="user_AF" />
+        <label for="EC">Enfermedades crónicas:</label>
+        <input type="text" id="EC" EC="user_EC" />
       
     
       <p></p>

@@ -64,6 +64,7 @@
                 <th><label1>Correo</label1></th>
                 <th><label1>Contraseña</label1></th>
                 <th><label1>Rol</label1></th>
+                <th><label1>Acciones</label1></th>
             </tr>
             </thead>
             <tr>
@@ -86,8 +87,12 @@
                   <td>{{ alb.5 }}</td>
                   <td>{{ alb.6 }}</td>
                   <td>{{ alb.7 }}</td>
+                  <td>{{ alb.8 }}</td>
+                  <td>{{ alb.9 }}</td>
                   <td>
-
+                    <a href="/editarMedico/{{ alb.0 }}" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></a>
+                    <a href="/borrarMedico/{{ alb.0 }}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                  </td>
                   </tr>
                   {%endfor %}
               </tbody>

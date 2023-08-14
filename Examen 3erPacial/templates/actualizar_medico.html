@@ -47,46 +47,46 @@
     <section></section>
 <aside></aside>
 <div id="divform">
-<form action="/my-handling-form-page" method="post">
+<form action="/actualizarMedico/{{ edmed.0 }}" method="post">
     <ul>
-        
-            <label for="id">ID:</label>
-            <input type="text" id="id" RFC="user_ID" required/>
-          
-          <p></p>
       
         <label for="nombre">Nombres(s):</label>
-        <input type="text" id="nombre" RFC="user_nombre" required/>
+        <input type="text" id="nombre" name="user_nombre" value="{{ edmed.1 }}" required/>
       
       <p></p>
       
         <label for="AP">Apellido Paterno:</label>
-        <input type="text" id="AP" name="user_AP" required/>
+        <input type="text" id="AP" name="user_AP" value="{{ edmed.2 }}" required/>
       
       <p></p>
       
         <label for="AM">Apellido Materno:</label>
-        <input type="text" id="AM" name="user_AM" required/>
+        <input type="text" id="AM" name="user_AM" value="{{ edmed.3 }}" required/>
+      
+      <p></p>
+
+         <label for="RFC">RFC:</label>
+        <input type="text" id="RFC" name="user_RFC" value="{{ edmed.4 }}" required/>
       
       <p></p>
       
         <label for="CP">Cédula Profesional:</label>
-        <input type="text" id="CP" name="user_CP" required/>
+        <input type="text" id="CP" name="user_CP" value="{{ edmed.5 }}" required/>
+      
+      <p></p>
+
+        <label for="CE">Correo electrónico:</label>
+        <input type="text" id="CE" name="user_CE" value="{{ edmed.6 }}" required/>
      
       <p></p>
       
         <label for="pass">Contraseña:</label>
-        <input type="password" id="pass" name="user_pass" required/>
+        <input type="password" id="pass" name="user_pass" value="{{ edmed.7 }}" required/>
       
-      <p></p>
-      
-        <label for="CE">Correo electrónico:</label>
-        <input type="text" id="CE" name="user_CE" required/>
-     
       <p></p>
      
         <label for="rol">Rol:</label>
-        <input type="text" id="rol" name="user_rol" required/>
+        <input type="text" id="rol" name="user_rol" value="{{ edmed.8 }}" required/>
       
     
       <p></p>

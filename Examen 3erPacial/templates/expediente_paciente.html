@@ -21,10 +21,20 @@
 <form action="/guardarPaciente" method="POST">
     <ul>
       
-        <label for="medico">Médico (ID):</label>
-        <input type="text" name="medico"  required/>
+        <label for="medico">Selecciona un medico</label>
+        <select id="medico" name="medico">
+          {% for medicos in medico %}
+              <option value="{{ medicos.0 }}">{{ medicos.1 }}</option>
+          {% endfor %}
+      </select>
+        <!--<input type="text" name="medico"  required/>-->
       
       <p></p>
+
+      <label for="exp">Expediente:</label>
+      <input type="number" name="exp"  required/>
+    
+    <p></p>
       
     
       <label for="paciente">Nombre del paciente:</label>
@@ -53,20 +63,19 @@
     </div>
     <div class="divform">
       <p></p>
-      <p></p>
-        <label for="EC">Enfermedades crónicas:</label>
-        <input type="text" name="EC" />
-      
-      <p></p>
-     
-        <label for="AL">Alergias:</label>
-        <input type="text" name="AL" />
      
       <p></p>
       
         <label for="AF">Antecedentes familiares:</label>
         <input type="text" name="AF" />
-      
+
+        <p></p>
+     
+        <label for="AL">Alergias:</label>
+        <input type="text" name="AL" />
+      <p></p>
+        <label for="EC">Enfermedades crónicas:</label>
+        <input type="text" name="EC" />
     
       <p></p>
       <p></p>
