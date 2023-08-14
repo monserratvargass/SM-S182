@@ -154,11 +154,13 @@ def buscarMedico():
     busqueda=curBusq.fetchall()
     return render_template('buscar_medico.html', busqmed=busqueda)
 
+#Consultar medico que atiende, nombre completo del paciente, fecha nacimiento, 
+# datos opcionales: ec,alergias, antecedentes con parametro de busqueda de expediente
 @app.route('/buscarPaciente',methods=['GET','POST'])
 def buscarPaciente():
     Bexp=request.form.get('user_exp')
     curBusq=mysql.connection.cursor()
-    curBusq.execute('select * from expediente where expediente LIKE %s', (f'%{Bexp}%',))
+    curBusq.execute('select exp_paciente.nombre,exp_paciente.ap,exp_paciente.am, exp_paciente.fecha_nac, exp_paciente.enf_cronicas,exp_paciente.alergias,exp_paciente.antec_fam, exp_paciente.exp,medico.nombre, medico.ap, medico.am from exp_paciente inner join medico on exp_paciente.id_medico=exp_paciente.id_medico where exp_paciente.exp LIKE %s', (f'%{Bexp}%',))
     busqueda=curBusq.fetchall()
     return render_template('buscar_paciente.html', busqpac=busqueda)
 
