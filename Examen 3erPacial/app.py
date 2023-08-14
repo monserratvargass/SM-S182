@@ -229,7 +229,7 @@ def buscarMedico():
 def buscarPaciente():
     Bexp=request.form.get('user_exp')
     curBusq=mysql.connection.cursor()
-    curBusq.execute('select exp_paciente.nombre,exp_paciente.ap,exp_paciente.am, exp_paciente.fecha_nac, exp_paciente.enf_cronicas,exp_paciente.alergias,exp_paciente.antec_fam, exp_paciente.exp,medico.nombre, medico.ap, medico.am from exp_paciente inner join medico on exp_paciente.id_medico=exp_paciente.id_medico where exp_paciente.exp LIKE %s', (f'%{Bexp}%',))
+    curBusq.execute('select medico.nombre,medico.ap,medico.am, exp_paciente.exp, exp_paciente.nombre,exp_paciente.ap,exp_paciente.am, exp_paciente.fecha_nac, exp_paciente.antec_fam,exp_paciente.alergias,exp_paciente.enf_cronicas from exp_paciente inner join medico on exp_paciente.id_medico=medico.id_medico where exp LIKE %s', (f'%{Bexp}%',))
     busqueda=curBusq.fetchall()
     return render_template('buscar_paciente.html', busqpac=busqueda)
 
@@ -242,7 +242,7 @@ def consultarCita():
     '''curSelect.execute('select id from persona where nombre=? ',(Cnom,))
     consulta=curSelect.fetchone()'''
     #if consulta:
-    curSelect.execute('select exp_paciente.exp,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exploracion inner join exp_paciente on exploracion.id_expediente=exploracion.id_expediente where exp_paciente.exp LIKE %s',(f'%{Cnom}%',))
+    curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exploracion inner join exp_paciente on exploracion.id_expediente=exploracion.id_expediente where exp_paciente.nombre LIKE %s',(f'%{Cnom}%',))
     Ccitas=curSelect.fetchall()
     return render_template('consultar_citas.html',tbcita=Ccitas)
 
