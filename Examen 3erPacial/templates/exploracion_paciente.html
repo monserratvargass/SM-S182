@@ -45,26 +45,33 @@
 
 <body id=bodyint>
    <div id="divform">
-<form action="/my-handling-form-page" method="post">
+<form action="/exploracionPaciente" method="post">
     <ul>
       
-        <label for="fecha">Fecha:</label>
-        <input type="text" id="fecha" medico="user_fecha" required/>
+      <label for="medico">Selecciona paciente</label>
+      <select id="pac" name="pac">
+        {% for pacientes in pac %}
+            <option value="{{ pacientes.0 }}">{{ pacientes.1 }}</option>
+        {% endfor %}
+    </select>
+<p></p>
+        <label for="fecha">Fecha cita:</label>
+        <input type="date" name="user_fecha" required/>
       
       <p></p>
       
       <label for="peso">Peso:</label>
-        <input type="text" id="peso" paciente="user_peso" required/>
+        <input type="number" name="user_peso" required/>
       
       <p></p>
 
         <label for="altura">Altura:</label>
-        <input type="text" id="altura" name="user_altura" required/>
+        <input type="number" name="user_altura" required/>
      
       <p></p>
       
         <label for="temperatura">Temperatura:</label>
-        <input type="text" id="temperatura" name="user_temperatura" required/>
+        <input type="number" name="user_temperatura" required/>
       
       <p></p>
       
@@ -74,17 +81,17 @@
       <p></p>
       <p></p>
         <label for="freccard">Frecuencia cardiaca:</label>
-        <input type="text" id="freccard" EC="user_freccard" required/>
+        <input type="text" name="user_freccard" required/>
       
       <p></p>
      
         <label for="ox">SpO2:</label>
-        <input type="text" id="ox" AL="user_ox" required/>
+        <input type="text" name="user_ox" required/>
      
       <p></p>
       
         <label for="gluc">Glucosa:</label>
-        <input type="text" id="gluc" AF="user_gluc" required/>
+        <input type="text" name="user_gluc" required/>
       
         
 
@@ -92,8 +99,8 @@
       <p></p>
       <p></p>
       <class="button">
-        <button type="submit">GUARDAR</button>
-        <class="button">
+        <button type="submit">GUARDAR</button><class="button">
+         
           <a href=/menu_usuario><button type="button"> CANCELAR </button></a>
            
             <p></p>

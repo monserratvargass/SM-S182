@@ -1,14 +1,7 @@
-from flask import Flask, Response, render_template, request, redirect, send_file,url_for,flash #Importar libreria
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required
-from flask import Flask, render_template, Response
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from io import BytesIO
+from flask import Flask, render_template, request, redirect,url_for,flash, Response #Importar libreria
 
-app = Flask(__name__)
-
-# Configura la conexión a la base de datos y otras configuraciones aquí
-
+#LOGIN
+from flask_login import LoginManager, login_user, logout_user, login_required
 
 #Config
 from config import config
@@ -22,13 +15,18 @@ from models.modelUser import ModelUser
 #Entities
 from models.entities.user import User
 
+#Importaciones para PDF
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+
 app=Flask(__name__) #Inicializacion del servidor Flask
 
 #Configuraciones para la conexion de   
 app.config['MYSQL_HOST']="localhost" #Especificar en que servidor trabajamos
 app.config['MYSQL_USER']="root" #Especificar usuario
 app.config['MYSQL_PASSWORD']="" #Especificar contraseña
-app.config['MYSQL_DB']="consultorio" #Especificar a que base de datos
+app.config['MYSQL_DB']="prueba_consultorio" #Especificar a que base de datos
 
 app.secret_key='mysecretkey' #Permite hacer envios a traves de post
 
@@ -89,30 +87,114 @@ def logout():
 def inicio():
     return render_template('inicio.html')
 
-
+#El registro de paciente tiene ID foraneo
 @app.route('/guardarPaciente',methods=['GET','POST'])
 def guardarPaciente():
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
-        _medico=request.form['medico']
+        _idmedico=request.form['medico']
+        _exp=request.form['exp']
+        #_idmedico=request.form['medico']
         _paciente=request.form['paciente']
         _ap=request.form['AP']
         _am=request.form['AM']
         _fn=request.form['FN']
-        _ec=request.form['EC']
-        _al=request.form['AL']
         _af=request.form['AF']
+        _al=request.form['AL']
+        _ec=request.form['EC']
         #print(titulo,artista,anio)
         CS=mysql.connection.cursor()
-        CS.execute('insert into expediente_paciente(medico,paciente,ap,am,fn,ec,al,af) values(%s,%s,%s,%s,%s,%s,%s,%s)',
-                   (_medico,_paciente,_ap,_am,_fn,_ec,_al,_af)) #Para ejecutar codigo sql, y pasamos parametros
+        CS.execute('insert into exp_paciente(id_medico,exp,nombre,ap,am,fecha_nac,antec_fam,alergias,enf_cronicas) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+                (_idmedico,_exp,_paciente,_ap,_am,_fn,_af,_al,_ec)) #Para ejecutar codigo sql, y pasamos parametros
         mysql.connection.commit()
 
-    flash('Paciente registrado exitosamente') #este mnsj se imprime en el CRUD de albums
-    #return redirect(url_for('index')) #Reedireccionamiento a la vista index
-    return render_template('expediente_paciente.html')
+        flash('Paciente registrado exitosamente') #este mnsj se imprime en el CRUD de albums
+        return redirect(url_for('guardarPaciente')) #Reedireccionamiento a la vista index
+
+    c=mysql.connection.cursor()
+    c.execute('select id_medico, concat (nombre, "",ap,"",am) as NombreCompleto from medico')
+    medico=c.fetchall()
+    return render_template('expediente_paciente.html', medico=medico)
 
 @app.route('/guardarMedico',methods=['GET','POST'])
 def guardarMedico():
+    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
+        nombre=request.form['nombre']
+        ap=request.form['AP']
+        am=request.form['AM']
+        rfc=request.form['RFC']
+        cp=request.form['CP']
+        ce=request.form['CE']
+        Pass=request.form['pass']
+        rol=request.form['rol']
+        #print(titulo,artista,anio)
+        CS=mysql.connection.cursor()
+        CS.execute('insert into medico(nombre,ap,am,rfc,ced_prof,correo,contrasena,rol) values(%s,%s,%s,%s,%s,%s,%s,%s)',
+                   (nombre,ap,am,rfc,cp,ce,Pass,rol)) #Para ejecutar codigo sql, y pasamos parametros
+        mysql.connection.commit()
+
+    flash('Médico registrado exitosamente')
+    #return redirect(url_for('index')) #Reedireccionamiento a la vista index
+    return render_template('registrar_medico.html')
+
+#En la exploracion del paciente tiene como ID foraneo al expediente del paciente
+@app.route('/exploracionPaciente',methods=['GET','POST'])
+def exploracionPaciente():
+    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
+        _idexp=request.form['pac']
+        fechacita=request.form['user_fecha']
+        peso=request.form['user_peso']
+        altura=request.form['user_altura']
+        temperatura=request.form['user_temperatura']
+        fc=request.form['user_freccard']
+        sto=request.form['user_ox']
+        gluc=request.form['user_gluc']
+        #print(titulo,artista,anio)
+        CS=mysql.connection.cursor()
+        CS.execute('insert into exploracion(id_expediente,fecha_cita,peso,altura,temperatura,frec_cardiaca,saturacion_ox,glucosa) values(%s,%s,%s,%s,%s,%s,%s,%s)',
+                   (_idexp,fechacita,peso,altura,temperatura,fc,sto,gluc)) #Para ejecutar codigo sql, y pasamos parametros
+        mysql.connection.commit()
+
+        flash('Exploracion del paciente registrado exitosamente')
+        return redirect(url_for('exploracionPaciente')) #Reedireccionamiento a la vista index
+    
+    c=mysql.connection.cursor()
+    c.execute('select id_expediente, concat (nombre, "",ap,"",am) as NombreCompleto from exp_paciente')
+    pac=c.fetchall()
+
+    return render_template('exploracion_paciente.html',pac=pac)
+
+#Diagnostico del paciente tiene como ID foraneo a exploracion del paciente, busqueda recomendada por fecha de cita (?)
+@app.route('/diagnosticoPaciente',methods=['GET','POST'])
+def diagnosticoPaciente():
+    
+    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
+        _idexp=request.form['pac']
+        _sint=request.form['sintomas']
+        _dx=request.form['dx']
+        _med=request.form['med']
+        _indicaciones=request.form['indicaciones']
+        _estudios=request.form['estudios']
+        CS=mysql.connection.cursor()
+        CS.execute('insert into diagnostico(id_exploracion,sintomas,dx,medicamento,tratamiento,solic_estudios) values(%s,%s,%s,%s,%s,%s)',
+                   (_idexp,_sint,_dx,_med,_indicaciones,_estudios)) #Para ejecutar codigo sql, y pasamos parametros
+        mysql.connection.commit()
+
+        flash('Diagnósticos del paciente registrado exitosamente')
+        return redirect(url_for('diagnosticoPaciente')) #Reedireccionamiento a la vista index
+    
+    c=mysql.connection.cursor()
+    c.execute('select exploracion.id_exploracion,exp_paciente.id_expediente, concat(nombre," ",ap," ",am) as Paciente FROM prueba_consultorio.exp_paciente INNER JOIN prueba_consultorio.exploracion ON exp_paciente.id_expediente = exploracion.id_expediente')
+    pac=c.fetchall()
+    return render_template('diagnostico_paciente.html',pac=pac)
+    #c=mysql.connection.cursor()
+    #c.execute('select id_exploracion from exploracion')
+    #diagnostico=c.fetchone()
+    #return render_template('diagnostico_paciente.html',diagnostico=diagnostico)
+#return render_template('diagnostico_paciente.html')
+
+#Para actualizar/editar al medico
+@app.route('/actualizarMedico/<id>',methods=['GET','POST'])
+def actualizarMedico(id):
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
         _nombre=request.form['nombre']
         _ap=request.form['AP']
@@ -124,28 +206,37 @@ def guardarMedico():
         _rol=request.form['rol']
         #print(titulo,artista,anio)
         CS=mysql.connection.cursor()
-        CS.execute('insert into registrar_usuario(nombre,ap,am,rfc,ced_prof,correo,contrasena,rol) values(%s,%s,%s,%s,%s,%s,%s,%s)',
-                   (_nombre,_ap,_am,_rfc,_cp,_ce,_pass,_rol)) #Para ejecutar codigo sql, y pasamos parametros
+        CS.execute('update medico set nombre=%s,ap=%s,am=%s,rfc=%s,ced_prof=%s,correo=%s,contrasena=%s,rol=%s where id_medico=%s',
+                   (_nombre,_ap,_am,_rfc,_cp,_ce,_pass,_rol,id)) #Para ejecutar codigo sql, y pasamos parametros
         mysql.connection.commit()
 
-    flash('Médico registrado exitosamente')
-    #return redirect(url_for('index')) #Reedireccionamiento a la vista index
-    return render_template('registrar_medico.html')
+    flash('Medico actualizado')
+    return redirect(url_for('inicio'))
 
-@app.route('/exploracionPaciente',methods=['GET','POST'])
-def exploracionPaciente():
+@app.route('/editarMedico/<id>')
+def editarMedico(id):
+    curEditar=mysql.connection.cursor()
+    curEditar.execute('select * from medico where id_medico= %s', (id,))#Coma importante por que lo confunde con una tupla
+    consultaID=curEditar.fetchone() #Para traer unicamente un registro
 
-    return render_template('exploracion_paciente.html')
+    return render_template('actualizar_medico.html', edmed=consultaID)
 
-@app.route('/diagnosticoPaciente',methods=['GET','POST'])
-def diagnosticoPaciente():
 
-    return render_template('diagnostico_paciente.html')
+#Para actualizar/editar al paciente
 
-@app.route('/actualizarPaciente',methods=['GET','POST'])
+@app.route('/actualizarPaciente/<id>',methods=['GET','POST'])
 def actualizarPaciente():
 
     return render_template('actualizar_paciente.html')
+
+@app.route('/editarPaciente/<id>')
+def editarPaciente(id):
+    curEditar=mysql.connection.cursor()
+    curEditar.execute('select * from exp_paciente where id_expediente= %s', (id,))#Coma importante por que lo confunde con una tupla
+    consultaID=curEditar.fetchone() #Para traer unicamente un registro
+
+    return render_template('actualizar_medico.html', edpac=consultaID)
+
 
 @app.route('/buscarMedico',methods=['GET','POST'])
 def buscarMedico():
@@ -174,7 +265,7 @@ def consultarCita():
     '''curSelect.execute('select id from persona where nombre=? ',(Cnom,))
     consulta=curSelect.fetchone()'''
     #if consulta:
-    curSelect.execute('select exp_paciente.nombre,exp_paciente.ap,exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exp_paciente.id_exploracion=exp_paciente.id_exploracion where exp_paciente.nombre LIKE %s',(f'%{Cnom}%',))
+    curSelect.execute('select exp_paciente.exp,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exploracion inner join exp_paciente on exploracion.id_expediente=exploracion.id_expediente where exp_paciente.exp LIKE %s',(f'%{Cnom}%',))
     Ccitas=curSelect.fetchall()
     return render_template('consultar_citas.html',tbcita=Ccitas)
 
@@ -197,10 +288,34 @@ def descargarReceta():
 
     return render_template('descargar_receta.html')
 
-@app.route('/eliminarMedico',methods=['GET','POST'])
-def eliminarMedico():
+#Eliminar medico
+@app.route('/eliminarMedico/<id>',methods=['GET','POST'])
+def eliminarMedico(id):
+    curDelete=mysql.connection.cursor()
+    curDelete.execute('delete from medico where id_medico=%s', (id)) 
+    mysql.connection.commit() #Para actualizar
 
-    return render_template('eliminar_medico.html')
+    flash('Medico eliminado')
+    return redirect(url_for('inicio'))
+
+#Borrar para eliminar
+@app.route('/borrarMedico/<id>')
+def borrarMedico(id):
+    curBorrar=mysql.connection.cursor()
+    curBorrar.execute('select * from medico where id_medico= %s', (id,))#Coma importante por que lo confunde con una tupla
+    consultaID=curBorrar.fetchone() #Para traer unicamente un registro
+
+    return render_template('eliminar_medico.html', bmed=consultaID)
+
+#ruta catálogo pacientes_registrados
+@app.route('/vinventarioPacientes_u') 
+def invPac_u():
+    inv=mysql.connection.cursor()
+    inv.execute('select * from exp_paciente')
+    mysql.connection.commit()
+
+    consulta_inv=inv.fetchall() 
+    return render_template('pacientes_registrados.html',listaPagos=consulta_inv)
 
 # ERROR HTML PARA SOLICITUDES MAL FORMADAS (ERROR 400)
 @app.errorhandler(400)
@@ -213,12 +328,12 @@ def status_401(error):
 
 
 #ERROR HTML PARA URL NO ENCONTRADAS (ERROR 404)
-def status_404(eror):
+def status_404(error):
     return "<h1> Página no encontrada </h1>", 404
 
 #Ejecucion del servidor
 if __name__=='__main__':
-    app.run()
+    #app.run()
     app.config.from_object(config['development'])
     app.register_error_handler(401, status_401)
     app.register_error_handler(404, status_404)

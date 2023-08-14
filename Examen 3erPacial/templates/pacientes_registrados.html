@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Consulta usuarios</title>
+</head>
+  <body class="p-3 mb-2 bg-dark text-white">
+    <div class="menu">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a  class="nav-link active" aria-current="page" href="{{ url_for('menu_usuario') }}"> Página de inicio</a>
+        </li>
+        </ul>
+      </div>
+
+    {%with mensajes=get_flashed_messages()%}
+    {% if mensajes%}
+      {%for msj in mensajes%}
+      <script>Swal.fire(
+        '',
+        '{{ msj }}  ',
+        'success')
+      </script>
+      {%endfor%}
+    {%endif%}
+  {%endwith%}
+
+  <h1>Pacientes registrados</h1>
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID:</th>
+        <th scope="col">ID_Médico:</th>
+        <th scope="col">Número de expediente:</th>
+        <th scope="col">Nombre:</th>
+        <th scope="col">Apellido Paterno:</th>
+        <th scope="col">Apellido Materno:</th>
+        <th scope="col">Fecha de nacimiento:</th>
+        <th scope="col">Antecedentes familiares:</th>
+        <th scope="col">Alergias:</th>
+        <th scope="col">Enfermedades crónicas:</th>
+  
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          {%for diag in listaDiagnostico %}
+        <td>{{ diag.0 }}</td>
+        <td>{{ diag.1 }}</td>
+        <td>{{ diag.2 }}</td>
+        <td>{{ diag.3 }}</td>
+        <td>{{ diag.4 }}</td>
+        <td>{{ diag.5 }}</td>
+        <td>{{ diag.6 }}</td>
+        <td>{{ diag.7 }}</td>
+        <td>{{ diag.8 }}</td>
+        <td>{{ diag.9 }}</td>
+        <td>
+          <a href="/vactualizar/{{ usu.0 }}" class="btn btn-secondary" >Editar</a>
+          <a href="/veliminar/{{ usu.0 }}" class="btn btn-secondary" >Eliminar</a>
+        </td>
+        </tr>
+        
+        {%endfor %}
+
+
+</body>
+</html>
