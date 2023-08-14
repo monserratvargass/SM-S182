@@ -87,7 +87,7 @@ def logout():
 def inicio():
     return render_template('inicio.html')
 
-
+#El registro de paciente tiene ID foraneo
 @app.route('/guardarPaciente',methods=['GET','POST'])
 def guardarPaciente():
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
@@ -136,6 +136,7 @@ def guardarMedico():
     #return redirect(url_for('index')) #Reedireccionamiento a la vista index
     return render_template('registrar_medico.html')
 
+#En la exploracion del paciente tiene como ID foraneo al expediente del paciente
 @app.route('/exploracionPaciente',methods=['GET','POST'])
 def exploracionPaciente():
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
@@ -162,6 +163,7 @@ def exploracionPaciente():
 
     return render_template('exploracion_paciente.html',pac=pac)
 
+#Diagnostico del paciente tiene como ID foraneo a exploracion del paciente, busqueda recomendada por fecha de cita (?)
 @app.route('/diagnosticoPaciente',methods=['GET','POST'])
 def diagnosticoPaciente():
 
