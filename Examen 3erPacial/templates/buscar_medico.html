@@ -42,7 +42,7 @@
 
 <body id=bodyint>
    <div id="divform">
-<form action="/my-handling-form-page" method="post">
+<form action="/buscarMedico" method="post">
     <nav>
     <ul>
         <h4>Búsqueda de médicos</h4> 
@@ -58,18 +58,18 @@
             <thead>
             <tr>
                 <th><label1>ID</label1></th>
-                <th><label1>id_medico</label1></th>
-                <th><label1>id_persona</label1></th>
-                <th><label1>Fecha_nacimiento</label1></th>
-                <th><label1>Antecedentes_familiares</label1></th>
-                <th><label1>alergias</label1></th>
-                <th><label1>Enfermedades_cronicas</label1></th>
-                <th><label1>id_exploracion</label1></th>
-                <th><label1>id_diagnostico</label1></th>
+                <th><label1>Nombre</label1></th>
+                <th><label1>Apellido paterno</label1></th>
+                <th><label1>Apellido materno</label1></th>
+                <th><label1>RFC</label1></th>
+                <th><label1>Cedula profesional</label1></th>
+                <th><label1>Correo</label1></th>
+                <th><label1>Rol</label1></th>
+                <th><label1>Acciones</label1></th>
             </tr>
             </thead>
             <tr>
-                <td>-</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -88,6 +88,7 @@
                   <td>{{ alb.5 }}</td>
                   <td>{{ alb.6 }}</td>
                   <td>{{ alb.7 }}</td>
+                  <td>{{ alb.8 }}</td>
                   <td>
 
                   </tr>

@@ -149,9 +149,9 @@ def actualizarPaciente():
 
 @app.route('/buscarMedico',methods=['GET','POST'])
 def buscarMedico():
-    Bnom=request.form.get('user_RFC')
+    Bnom=request.form.get('user_nombre')
     curBusq=mysql.connection.cursor()
-    curBusq.execute('select * from medico where rfc LIKE %s', (f'%{Bnom}%',))
+    curBusq.execute('select * from medico where nombre LIKE %s', (f'%{Bnom}%',))
     busqueda=curBusq.fetchall()
     return render_template('buscar_medico.html', busqmed=busqueda)
 
