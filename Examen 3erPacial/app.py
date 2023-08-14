@@ -167,7 +167,25 @@ def exploracionPaciente():
 @app.route('/diagnosticoPaciente',methods=['GET','POST'])
 def diagnosticoPaciente():
 
-    return render_template('diagnostico_paciente.html')
+    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
+        _idexp=request.form['pac']
+        _sint=request.form['sintomas']
+        _dx=request.form['dx']
+        _med=request.form['med']
+        _indicaciones=request.form['indicaciones']
+        _estudios=request.form['estudios']
+        CS=mysql.connection.cursor()
+        CS.execute('insert into diagnostico(id_exploracion,sintomas,dx,medicamento,tratamiento,solic_estudios) values(%s,%s,%s,%s,%s,%s)',
+                   (_idexp,_sint,_dx,_med,_indicaciones,_estudios)) #Para ejecutar codigo sql, y pasamos parametros
+        mysql.connection.commit()
+
+        flash('Diagnósticos del paciente registrado exitosamente')
+        return redirect(url_for('diagnosticoPaciente')) #Reedireccionamiento a la vista index
+
+    c=mysql.connection.cursor()
+    c.execute('select exploracion.id_exploracion,exp_paciente.id_expediente, concat(nombre," ",ap," ",am) as Paciente FROM prueba_consultorio.exp_paciente INNER JOIN prueba_consultorio.exploracion ON exp_paciente.id_expediente = exploracion.id_expediente')
+    pac=c.fetchall()
+    return render_template('diagnostico_paciente.html',pac=pac)
 
 #Para actualizar/editar al medico
 @app.route('/actualizarMedico/<id>',methods=['GET','POST'])

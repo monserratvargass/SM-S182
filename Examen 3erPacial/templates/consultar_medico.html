@@ -46,11 +46,11 @@
     <nav>
     <ul>
         <p></p>
-<H4> Consultar médicos </H4>
+<H1> Consultar médicos </H1>
         <p></p>
-        <label for="nombre">Nombres(s):</label>
-        <input type="text" id="nombre" name="user_nombre" />
-      
+        
+        <p></p> 
+        <p></p>
         <ul>
           <table>
             <thead>
@@ -64,7 +64,7 @@
                 <th><label1>Correo</label1></th>
                 <th><label1>Contraseña</label1></th>
                 <th><label1>Rol</label1></th>
-                <th><label1>Acciones</label1></th>
+             
             </tr>
             </thead>
             <tr>
@@ -88,10 +88,15 @@
                   <td>{{ alb.6 }}</td>
                   <td>{{ alb.7 }}</td>
                   <td>{{ alb.8 }}</td>
-                  <td>{{ alb.9 }}</td>
+                  
                   <td>
-                    <a href="/editarMedico/{{ alb.0 }}" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></a>
-                    <a href="/borrarMedico/{{ alb.0 }}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                  <!--<a href="/editarMedico/{{ alb.0 }}" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></a>
+                    <a href="/borrarMedico/{{ alb.0 }}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>-->
+                    <class="button">
+                      <button type="submit">GUARDAR</button>
+                      <class="button">
+                        <a href=/menu_usuario><button type="button"> CANCELAR </button></a>
+                         
                   </td>
                   </tr>
                   {%endfor %}

@@ -45,16 +45,32 @@
 
 <body id=bodyint>
    <div id="divform">
-<form action="/my-handling-form-page" method="post">
+<form action="/diagnosticoPaciente" method="post">
     <ul>
       
+      <!--<label for="medico">Selecciona un paciente</label>
+      <select id="diag" name="diag">
+        {% for diag in diagnostico %}
+            <option value="{{ diag.0 }}">{{ diagnostico.1 }}</option>
+        {% endfor %}
+    </select>-->
+    
+    <label for="medico">Selecciona paciente</label>
+    <select id="pac" name="pac">
+      {% for pacientes in pac %}
+          <option value="{{ pacientes.0 }}">{{ pacientes.1 }} {{ pacientes.2 }} </option>
+      {% endfor %}
+  </select>
+
+      <p>
+      </p>
         <label for="sint">Síntomas</label>
-        <input type="text" id="sint" medico="user_sint" required/>
+        <input type="text" id="sint" name="sintomas" required/>
       
       <p></p>
       
       <label for="dx">Dx</label>
-        <input type="text" id="dx" paciente="user_dx" required/>
+        <input type="text" id="dx" name="dx" required/>
       
       <p></p>
       <p></p>
@@ -64,12 +80,12 @@
         <div id="divform">
             <h4>Tratamiento</h4>
         <label for="med">Medicamentos:</label>
-        <input type="text" id="med" name="user_med" required/>
+        <input type="text" id="med" name="med" required/>
      
       <p></p>
       
         <label for="ind">Indicaciones:</label>
-        <input type="text" id="ind" name="user_ind" required/>
+        <input type="text" id="ind" name="indicaciones" required/>
       
       <p></p>
       <p></p>
@@ -79,7 +95,7 @@
               
         <h4>Solicitud de estudios</h4>
         <label for="TS">Tipo de solicitud:</label>
-        <input type="text" id="TS" FN="user_TS" required />
+        <input type="text" id="TS" name="estudios" required />
       
       <p></p>
     </div>
