@@ -11,7 +11,7 @@
 <body class=bodyint>
     <div class="divform">
     
-     
+        <h2>Bienvenido, {{current_user.fullname}}</h2>
 
    <p></p>
     <a href="guardarPaciente" class="button2">REGISTRAR PACIENTE</a>
@@ -36,11 +36,17 @@
 
 </div>
 </body>
+{%with mensajes=get_flashed_messages()%}
+{%if mensajes%}
+{%for msj in mensajes%}
 
 <script>Swal.fire({
     "title":"Listo!",
     "text":"{{msj}}",
     "icon":"success"})</script>
 
+{%endfor%}
+{%endif%}
+{%endwith%}
 <footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>

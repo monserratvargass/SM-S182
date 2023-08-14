@@ -20,43 +20,43 @@
     <ul>
       
         <label for="nombre">Nombres(s):</label>
-        <input type="text" name="nombre" name="user_nombre" required/>
+        <input type="text" name="nombre"  required/>
       
       <p></p>
       
         <label for="AP">Apellido Paterno:</label>
-        <input type="text" name="AP" name="user_AP" required />
+        <input type="text" name="AP" required />
      
       <p></p>
       
         <label for="AM">Apellido Materno:</label>
-        <input type="text" name="AM" name="user_AM" required/>
+        <input type="text" name="AM" required/>
       
       <p></p>
       
         <label for="RFC">RFC:</label>
-        <input type="text" name="RFC" name="user_RFC" required/>
+        <input type="text" name="RFC" required/>
       
       <p></p>
 
         <label for="CP">Cédula Profesional:</label>
-        <input type="text" name="CP" name="user_CP" required />
+        <input type="text" name="CP"  required />
       
       <p></p>
 
         <label for="CE">Correo electrónico:</label>
-        <input type="text" name="CE" name="user_CE" required/>
+        <input type="text" name="CE" required/>
       
       <p></p>
       
         <label for="pass">Contraseña:</label>
-        <input type="password" name="pass" name="user_pass" required/>
+        <input type="password" name="pass"  required/>
      
       <p></p>
       
         <label for="rol">Rol:</label>
         <!--<input type="text" name="rol" name="user_rol" required/>-->
-        <select class="custom-select", name="opcion">
+        <select class="custom-select", name="rol">
           <option value="medico-admin">Medico administrador</option>
           <option value="medico-general">Medico general</option>
         </select>
@@ -72,16 +72,17 @@
       
     </ul>
   </form>
-  {%with mensajes=get_flashed_messages()%}
+  
+</div>
+
+</body>
+{%with mensajes=get_flashed_messages()%}
   {% if mensajes%}
     {%for msj in mensajes%}
     <script>Swal.fire('Listo!','Medico registrado','success')</script>
     {%endfor%}
   {%endif%}
   {%endwith%}
-</div>
-
-</body>
 </div>
 <div>
   <p></p>
