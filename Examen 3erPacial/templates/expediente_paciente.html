@@ -1,3 +1,6 @@
+{% extends 'plantilla.html' %} 
+
+{% block body %}
 <!DOCTYPE html>
 <html>
    <title> Expediente paciente </title>
@@ -11,6 +14,7 @@
 </header>
     <div>
     <style>
+      
       </style>
 </header>
 <nav></nav>
@@ -90,18 +94,18 @@
     </ul>
   </form>
 </div>
+</body>
 {%with mensajes=get_flashed_messages()%}
 {% if mensajes%}
   {%for msj in mensajes%}
-  <script>Swal.fire('Listo!','Registro exitoso','success')</script>
+  <script>Swal.fire('Listo!','Expediente del paciente registrado','success')</script>
   {%endfor%}
 {%endif%}
 {%endwith%}
-
-</body>
 </div>
 <div>
   <p></p>
 </div>
 <footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

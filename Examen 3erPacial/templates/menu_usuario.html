@@ -1,10 +1,13 @@
+{% extends 'plantilla.html' %} 
 
+{% block body %}
 <!DOCTYPE html>
 <html lang="en">
 <header class="header01">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
     <h3>Menu</h3>
 </header>
@@ -49,3 +52,4 @@
 {%endwith%}
 <footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

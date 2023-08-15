@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect,url_for,flash, Response #Importar libreria
+from flask import Flask, render_template, request, redirect,url_for,flash,session,flash, Response #Importar libreria
 
 #LOGIN
 from flask_login import LoginManager, login_user, logout_user, login_required
@@ -45,33 +45,39 @@ def load_user(id):
 def index():
     return render_template('login.html')
 
-@app.route('/login', methods = ['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
-    rfc=request.form['rfc']
-    contraseña=request.form['contraseña']
-    if request.method=='POST':
-        
-        user = User(0, rfc, contraseña)
-        logged_user = ModelUser.login(mysql, user)
-        if logged_user != None:
-            if logged_user.password:
-                login_user(logged_user)
-                return redirect(url_for('inicio'))
-            else:
-                flash ('Contraseña incorrecta')
-                return render_template ('login.html')
+    rfc = request.form['rfc']
+    contrasena = request.form['contrasena']
+
+    cs = mysql.connection.cursor()
+    consulta = "SELECT rfc FROM `prueba_consultorio`.`medico` WHERE rfc = %s AND contrasena = %s"
+    cs.execute(consulta, (rfc, contrasena))
+    resultado = cs.fetchone()
+    
+    if resultado is not None:
+        rol_query = "SELECT rol FROM `prueba_consultorio`.`medico` WHERE rfc = %s AND contrasena = %s"
+        cs.execute(rol_query, (rfc, contrasena))
+        rol_resultado = cs.fetchone()
+
+        if rol_resultado is not None and rol_resultado[0] == "admin":
+            session['rfc'] = resultado[0]
+            return render_template('menu_admin.html')
         else:
-            flash ('RFC no encontrado')
-            return render_template ('login.html')
+            session['rfc'] = resultado[0]
+            return render_template('menu_usuario.html')
     else:
-        return render_template ('login.html')
+        flash('RFC o contraseña incorrectos. Intente nuevamente.', 'error')
+        return redirect(url_for('login'))
 
 
 @app.route('/menu_admin')
+@login_required #Proteccion de rutas
 def menu_admin():
         return render_template('menu_admin.html')
 
 @app.route('/menu_usuario')
+@login_required #Proteccion de rutas
 def menu_usuario():
         # Renderizar el panel de usuario
         return render_template('menu_usuario.html')

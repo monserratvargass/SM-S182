@@ -1,47 +1,23 @@
+{% extends 'plantilla.html' %} 
 
-
+{% block body %}
 <html>
     <title>Receta</title>
-    <link href="Estilos.css" rel="stylesheet">
-<body id="bodyint">
- <header id="header01">
+    <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<body class="bodyint">
+ <header class="header01">
          <h2> SISTEMA DE GESTIÓN MÉDICA </h2>
          <h3> Descargar receta </h3>
          <style>
-            #bodyint{
-    background-color: whitesmoke;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
-    color: cornsilk;
-}
-#header01{
-    border: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    background-color: rgb(33, 2, 75);}
-
-#divform{
-    color:rgb(33, 2, 75) ; 
-    border-bottom: 3px solid darkgray;
-    border-top: 3px solid darkgray;
-    border-left: 3px solid darkgray;
-    border-right: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    }
-
-#footer{
-    text-align: center;
-    color: black;
-}
          </style>
 </header>
 <p></p>
-<div id="divform"><p> 
+<div class="divform"><p> 
 <h4> Receta</h4>
-    <form action="/my-handling-form-page" method="post">
+    <form action="/descargarReceta" method="post">
         <ul>
                 <p></p>
         <p></p>
@@ -56,7 +32,8 @@
       </form>
 </p></div>
 
-    <footer id="footer"><p>2023| Todos los derechos reservados</p></footer>
+    <footer class="footer"><p>2023| Todos los derechos reservados</p></footer>
 
    </body>
    </html>
+   {% endblock %}

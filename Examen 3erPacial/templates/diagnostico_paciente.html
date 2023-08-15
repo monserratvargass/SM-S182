@@ -1,101 +1,62 @@
+{% extends 'plantilla.html' %} 
+
+{% block body %}
 <!DOCTYPE html>
 <html lang="en">
   <title> Diagnóstico paciente </title>
+  <header class="header01">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
    
-<header id="header01">
+
   <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
   <h3>Diagnóstico</h3>
 </header>
     <div>
     <style>
-         #bodyint{
-    background-color: whitesmoke;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
-    color: cornsilk;
-}
-#header01{
-    border: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    background-color: rgb(33, 2, 75);}
-
-#divform{
-    color:rgb(33, 2, 75) ; 
-    border-bottom: 3px solid darkgray;
-    border-top: 3px solid darkgray;
-    border-left: 3px solid darkgray;
-    border-right: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    }
-
-    #div2{
-               color:rgb(33, 2, 75) ;
-    }
-#footer{
-    text-align: center;
-    color: black;
-}
       </style>
 </header>
 <nav></nav>
 
-<body id=bodyint>
-   <div id="divform">
+<body class=bodyint>
+   <div class="divform">
 <form action="/diagnosticoPaciente" method="post">
     <ul>
       
-      <!--<label for="medico">Selecciona un paciente</label>
-      <select id="diag" name="diag">
-        {% for diag in diagnostico %}
-            <option value="{{ diag.0 }}">{{ diagnostico.1 }}</option>
-        {% endfor %}
-    </select>-->
-    
-    <label for="medico">Selecciona paciente</label>
-    <select id="pac" name="pac">
-      {% for pacientes in pac %}
-          <option value="{{ pacientes.0 }}">{{ pacientes.1 }} {{ pacientes.2 }} </option>
-      {% endfor %}
-  </select>
-
-      <p>
-      </p>
         <label for="sint">Síntomas</label>
-        <input type="text" id="sint" name="sintomas" required/>
+        <input type="text" id="sint" medico="user_sint" required/>
       
       <p></p>
       
       <label for="dx">Dx</label>
-        <input type="text" id="dx" name="dx" required/>
+        <input type="text" id="dx" paciente="user_dx" required/>
       
       <p></p>
       <p></p>
     </div>
     
         <p></p>
-        <div id="divform">
+        <div class="divform">
             <h4>Tratamiento</h4>
         <label for="med">Medicamentos:</label>
-        <input type="text" id="med" name="med" required/>
+        <input type="text" id="med" name="user_med" required/>
      
       <p></p>
       
         <label for="ind">Indicaciones:</label>
-        <input type="text" id="ind" name="indicaciones" required/>
+        <input type="text" id="ind" name="user_ind" required/>
       
       <p></p>
       <p></p>
     </div>
         <p></p>
-        <div id="divform">
+        <div class="divform">
               
         <h4>Solicitud de estudios</h4>
         <label for="TS">Tipo de solicitud:</label>
-        <input type="text" id="TS" name="estudios" required />
+        <input type="text" id="TS" name="user_TS" required />
       
       <p></p>
     </div>
@@ -112,9 +73,17 @@
   </form>
 </div>
 </body>
+{%with mensajes=get_flashed_messages()%}
+  {% if mensajes%}
+    {%for msj in mensajes%}
+    <script>Swal.fire('Listo!','Diagnostico del paciente registrado','success')</script>
+    {%endfor%}
+  {%endif%}
+  {%endwith%}
 </div>
 <div>
   <p></p>
 </div>
-<footer id="footer">2023 | Todos los derechos reservados </footer>
+<footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

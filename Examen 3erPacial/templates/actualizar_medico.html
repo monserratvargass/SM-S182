@@ -1,52 +1,28 @@
+{% extends 'plantilla.html' %} 
+
+{% block body %}
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" type="txt/css" href="{{ url_for('static',filename='css/main.css') }}">
   <title> Actualización datos del médico </title>
-<header id="header01">
+  <header class="header01">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
   <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
   <h3>Actualizar datos del médico</h3> </header>
     <div>
     <style>
-    #bodyint{
-    background-color: whitesmoke;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
-    color: cornsilk;
-}
-#header01{
-    border: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    background-color: rgb(33, 2, 75);}
-
-#divform{
-    color:rgb(33, 2, 75) ; 
-    border-bottom: 3px solid darkgray;
-    border-top: 3px solid darkgray;
-    border-left: 3px solid darkgray;
-    border-right: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-  
-    }
-
-#footer{
-    text-align: center;
-    color: black;
-}
-
-    
       </style>
 </header>
 <nav></nav>
 
-<body id="bodyint">
+<body class="bodyint">
     <h1>     </h1>
     <section></section>
 <aside></aside>
-<div id="divform">
+<div class="divform">
 <form action="/actualizarMedico/{{ id }}" method="post">
     <ul>
       
@@ -110,5 +86,6 @@
 <div>
   <p></p>
 </div>
-<footer id="footer">2023 | Todos los derechos reservados </footer>
+<footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

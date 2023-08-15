@@ -1,47 +1,26 @@
+{% extends 'plantilla.html' %} 
+
+{% block body %}
 <!DOCTYPE html>
 <html lang="en">
   <title> Consultar médico </title>
+  <header class="header01">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
    
-<header id="header01">
   <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
   <h3>Consultar médico</h3>
 </header>
     <div>
     <style>
-         #bodyint{
-    background-color: whitesmoke;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
-    color: cornsilk;
-}
-#header01{
-    border: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    background-color: rgb(33, 2, 75);}
-
-#divform{
-    color:rgb(33, 2, 75) ; 
-    border-bottom: 3px solid darkgray;
-    border-top: 3px solid darkgray;
-    border-left: 3px solid darkgray;
-    border-right: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    }
-
-#footer{
-    text-align: center;
-    color: black;
-}
       </style>
 </header>
 
 
-<body id=bodyint>
-   <div id="divform">
+<body class=bodyint>
+   <div class="divform">
 <form action="/consultarMedico" method="post">
     <nav>
     <ul>
@@ -94,7 +73,7 @@
                     <a href="/borrarMedico/{{ alb.0 }}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>-->
                   
                     <a href="/editarMedico/{{alb.0}}"><button type="button"> ACTUALIZAR </button></a>
-                        <a href="/borrarMedico/{{alb.0}}""><button type="button"> ELIMINAR </button></a>
+                        <a href="/borrarMedico/{{alb.0}}"><button type="button"> ELIMINAR </button></a>
                          
                   </td>
                   </tr>
@@ -124,5 +103,6 @@
 <div>
   <p></p>
 </div>
-<footer id="footer">2023 | Todos los derechos reservados </footer>
+<footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

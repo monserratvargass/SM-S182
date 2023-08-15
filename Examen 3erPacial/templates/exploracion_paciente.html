@@ -1,50 +1,25 @@
+{% extends 'plantilla.html' %} 
+
+{% block body %}
 <!DOCTYPE html>
 <html lang="en">
   <title> Exploración paciente </title>
-   
-<header id="header01">
+  <header class="header01">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <h2>SISTEMA DE GESTIÓN MÉDICA</h2>
   <h3>Exploración paciente</h3>
 </header>
     <div>
     <style>
-         #bodyint{
-    background-color: whitesmoke;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
-    color: cornsilk;
-}
-#header01{
-    border: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    background-color: rgb(33, 2, 75);}
-
-#divform{
-    color:rgb(33, 2, 75) ; 
-    border-bottom: 3px solid darkgray;
-    border-top: 3px solid darkgray;
-    border-left: 3px solid darkgray;
-    border-right: 3px solid darkgray;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 10px;
-    }
-
-    #div2{
-               color:rgb(33, 2, 75) ;
-    }
-#footer{
-    text-align: center;
-    color: black;
-}
       </style>
 </header>
 <nav></nav>
 
-<body id=bodyint>
-   <div id="divform">
+<body class=bodyint>
+   <div class="divform">
 <form action="/exploracionPaciente" method="post">
     <ul>
       
@@ -77,7 +52,7 @@
       
       
     
-    <div id="divform">
+    <div class="divform">
       <p></p>
       <p></p>
         <label for="freccard">Frecuencia cardiaca:</label>
@@ -107,11 +82,19 @@
       <p></p>
     </ul>
   </form>
+  {%with mensajes=get_flashed_messages()%}
+  {% if mensajes%}
+    {%for msj in mensajes%}
+    <script>Swal.fire('Listo!','Exploracion del paciente registrado','success')</script>
+    {%endfor%}
+  {%endif%}
+  {%endwith%}
 </div>
 </body>
 </div>
 <div>
   <p></p>
 </div>
-<footer id="footer">2023 | Todos los derechos reservados </footer>
+<footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}

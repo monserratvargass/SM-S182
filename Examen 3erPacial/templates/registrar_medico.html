@@ -1,6 +1,13 @@
+{% extends 'plantilla.html' %} 
+
+{% block body %}
+
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="{{ url_for('static',filename='css/main.css') }}">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title> Registrar usuario </title>
    
 <header class="header01">
@@ -57,8 +64,8 @@
         <label for="rol">Rol:</label>
         <!--<input type="text" name="rol" name="user_rol" required/>-->
         <select class="custom-select", name="rol">
-          <option value="medico-admin">Medico-admin</option>
-          <option value="medico-general">usuario</option>
+          <option value="admin">Medico administrador</option>
+          <option value="user">Usuario</option>
         </select>
     
       <p></p>
@@ -89,3 +96,4 @@
 </div>
 <footer class="footer">2023 | Todos los derechos reservados </footer>
 </html>
+{% endblock %}
