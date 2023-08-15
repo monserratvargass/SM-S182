@@ -49,7 +49,7 @@
 <H4> Consultar cita</H4>
 <p></p>     
 <p></p>
-        <label for="nombre">Nombres (s):</label>
+        <label for="nombre">Nombre paciente:</label>
         <input type="text" id="nombre" name="user_nombre" />
       
         <p></p>
@@ -64,7 +64,7 @@
                 <th><label1>Apellido Materno</label1></th>
                 <!--<th><label1>Nombre completo</label1></th> Opcion de nombre completo en lugar de que sea individual-->
                 <th><label1>Fecha de la cita</label1></th>
-                <th><label1>Reimprimir receta</label1></th>
+                
             </tr>
             </thead>
             <tr>
@@ -86,7 +86,7 @@
                   <!--<td>{{ alb.4 }}</td>-->
                   <td>{{ alb.4 }}</td>
                   <td>{{ alb.5 }}</td>
-                 
+                  <td><button type="submit">REIMPRIMIR RECETA</button></td>
 
                   {%endfor %}
      
@@ -99,18 +99,13 @@
         <button type="submit">CONSULTAR</button>
         <class="button">
           <a href=/menu_usuario><button type="button"> CANCELAR </button></a>
-            <button type="submit">REIMPRIMIR RECETA</button>
-    
-           
-      
+            
     </ul>  
 </nav>
   </form>
 </div>
 </body>
 </div>
-<div>
-  <p></p>
-</div>
+
 <footer id="footer">2023 | Todos los derechos reservados </footer>
 </html>

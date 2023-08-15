@@ -47,7 +47,7 @@
     <section></section>
 <aside></aside>
 <div id="divform">
-<form action="/actualizarMedico/{{ edmed.0 }}" method="post">
+<form action="/actualizarMedico/{{ id }}" method="post">
     <ul>
       
         <label for="nombre">Nombres(s):</label>
@@ -86,8 +86,11 @@
       <p></p>
      
         <label for="rol">Rol:</label>
-        <input type="text" id="rol" name="user_rol" value="{{ edmed.8 }}" required/>
-      
+       <!-- <input type="text" id="rol" name="user_rol" value="{{ edmed.8 }}" required/>-->
+        <select class="custom-select", name="user_rol" value="{{ edmed.8 }}" required>
+          <option value="medico-admin">Medico-admin</option>
+          <option value="medico-general">usuario</option>
+        </select>
     
       <p></p>
       <p></p>

@@ -187,18 +187,27 @@ def diagnosticoPaciente():
     pac=c.fetchall()
     return render_template('diagnostico_paciente.html',pac=pac)
 
+
+@app.route('/editarMedico/<id>',methods=['GET','POST'])
+def editarMedico(id):
+    curEditar=mysql.connection.cursor()
+    curEditar.execute('select * from medico where id_medico= %s', (id,))#Coma importante por que lo confunde con una tupla
+    consultaID=curEditar.fetchone() #Para traer unicamente un registro
+
+    return render_template('actualizar_medico.html',id=id, edmed=consultaID)
+
 #Para actualizar/editar al medico
-@app.route('/actualizarMedico/<id>',methods=['GET','POST'])
+@app.route('/actualizarMedico/<id>',methods=['POST'])
 def actualizarMedico(id):
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
-        _nombre=request.form['nombre']
-        _ap=request.form['AP']
-        _am=request.form['AM']
-        _rfc=request.form['RFC']
-        _cp=request.form['CP']
-        _ce=request.form['CE']
-        _pass=request.form['pass']
-        _rol=request.form['rol']
+        _nombre=request.form['user_nombre']
+        _ap=request.form['user_AP']
+        _am=request.form['user_AM']
+        _rfc=request.form['user_RFC']
+        _cp=request.form['user_CP']
+        _ce=request.form['user_CE']
+        _pass=request.form['user_pass']
+        _rol=request.form['user_rol']
         #print(titulo,artista,anio)
         CS=mysql.connection.cursor()
         CS.execute('update medico set nombre=%s,ap=%s,am=%s,rfc=%s,ced_prof=%s,correo=%s,contrasena=%s,rol=%s where id_medico=%s',
@@ -206,31 +215,61 @@ def actualizarMedico(id):
         mysql.connection.commit()
 
     flash('Medico actualizado')
-    return redirect(url_for('inicio'))
-
-@app.route('/editarMedico/<id>')
-def editarMedico(id):
-    curEditar=mysql.connection.cursor()
-    curEditar.execute('select * from medico where id_medico= %s', (id,))#Coma importante por que lo confunde con una tupla
-    consultaID=curEditar.fetchone() #Para traer unicamente un registro
-
-    return render_template('actualizar_medico.html', edmed=consultaID)
+    return redirect(url_for('consultarMedico'))
 
 
 #Para actualizar/editar al paciente
 
 @app.route('/actualizarPaciente/<id>',methods=['GET','POST'])
-def actualizarPaciente():
+def actualizarPaciente(id):
+    editar=mysql.connection.cursor()
+    editar.execute('select * from exp_paciente where id_expediente = %s',(id,))
+    consulta=editar.fetchone() 
+    return render_template('actualizar_paciente.html',id=id,edpac=consulta)
+   
 
-    return render_template('actualizar_paciente.html')
-
-@app.route('/editarPaciente/<id>')
+@app.route('/editarPaciente/<id>',methods=['POST'])
 def editarPaciente(id):
-    curEditar=mysql.connection.cursor()
-    curEditar.execute('select * from exp_paciente where id_expediente= %s', (id,))#Coma importante por que lo confunde con una tupla
-    consultaID=curEditar.fetchone() #Para traer unicamente un registro
+    if request.method == 'POST':
+       _nombre=request.form['paciente']
+       _ap=request.form['user_AP']
+       _am=request.form['user_AM']
+       _fn=request.form['user_FN']
+       _af=request.form['user_AF']
+       _al=request.form['user_AL']
+       _enfc=request.form['user_EC']
 
-    return render_template('actualizar_medico.html', edpac=consultaID)
+       curAct=mysql.connection.cursor()
+       curAct.execute('update exp_paciente set nombre=%s, ap=%s, am=%s, fecha_nac=%s,antec_fam=%s,alergias=%s,enf_cronicas=%s where id_expediente = %s', (_nombre,_ap,_am,_fn,_af,_al,_enfc,id))
+       mysql.connection.commit()
+
+       flash('Paciente actualizado correctamente')
+       return redirect(url_for('consultarPaciente'))
+
+@app.route('/veliminar/<id>') 
+def eliminarPac(id):
+    eliminar=mysql.connection.cursor()
+    eliminar.execute('select * from exp_paciente where id_expediente = %s',(id,))
+    consulta=eliminar.fetchone()
+ 
+    return render_template('eliminar_paciente.html',id=id,edpac=consulta)
+
+
+@app.route('/eliminarPaciente/<id>',methods=['POST']) 
+def eliminarPaciente(id):
+    if request.method=='POST':
+    
+      eliminar=mysql.connection.cursor()
+      eliminar.execute('select id_exploracion from exploracion where id_expediente =%s',(id,))
+      id_exp=eliminar.fetchone()
+      eliminar.execute('delete from diagnostico where id_exploracion = %s',(id_exp))
+      eliminar.execute('delete from exploracion where id_expediente =%s',(id,))
+      eliminar.execute('delete from exp_paciente where id_expediente = %s',(id,))
+      mysql.connection.commit()
+
+    
+    flash('Paciente eliminado correctamente')
+    return redirect(url_for('consultarPaciente'))
 
 
 @app.route('/buscarMedico',methods=['GET','POST'])
@@ -260,7 +299,7 @@ def consultarCita():
     '''curSelect.execute('select id from persona where nombre=? ',(Cnom,))
     consulta=curSelect.fetchone()'''
     #if consulta:
-    curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exploracion inner join exp_paciente on exploracion.id_expediente=exploracion.id_expediente where exp_paciente.nombre LIKE %s',(f'%{Cnom}%',))
+    curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exploracion.id_expediente=exp_paciente.id_expediente where exp_paciente.nombre LIKE %s',(f'%{Cnom}%',))
     Ccitas=curSelect.fetchall()
     return render_template('consultar_citas.html',tbcita=Ccitas)
 
@@ -284,15 +323,6 @@ def descargarReceta():
     return render_template('descargar_receta.html')
 
 #Eliminar medico
-@app.route('/eliminarMedico/<id>',methods=['GET','POST'])
-def eliminarMedico(id):
-    curDelete=mysql.connection.cursor()
-    curDelete.execute('delete from medico where id_medico=%s', (id)) 
-    mysql.connection.commit() #Para actualizar
-
-    flash('Medico eliminado')
-    return redirect(url_for('inicio'))
-
 #Borrar para eliminar
 @app.route('/borrarMedico/<id>')
 def borrarMedico(id):
@@ -300,8 +330,17 @@ def borrarMedico(id):
     curBorrar.execute('select * from medico where id_medico= %s', (id,))#Coma importante por que lo confunde con una tupla
     consultaID=curBorrar.fetchone() #Para traer unicamente un registro
 
-    return render_template('eliminar_medico.html', bmed=consultaID)
+    return render_template('eliminar_medico.html', bmed=consultaID,id=id)
 
+@app.route('/eliminarMedico/<id>',methods=['POST'])
+def eliminarMedico(id):
+    if request.method=='POST':
+     curDelete=mysql.connection.cursor()
+     curDelete.execute('delete from medico where id_medico=%s', (id)) 
+    mysql.connection.commit() #Para actualizar
+
+    flash('Medico eliminado')
+    return redirect(url_for('consultarMedico'))
 
 # ERROR HTML PARA SOLICITUDES MAL FORMADAS (ERROR 400)
 @app.errorhandler(400)

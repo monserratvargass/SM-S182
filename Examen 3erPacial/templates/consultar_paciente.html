@@ -46,44 +46,30 @@
     <nav>
     <ul>
         <p></p>
-<H4> Consultar paciente</H4>
+<H2> Consultar paciente</H2>
 <p></p>
-        <label for="exp">Expediente:</label>
-        <input type="text" id="exp" name="user_exp" />
-      
-      <p></p>        
-
-
+       
       <ul>
         <table>
           <thead>
           <tr>
-              <th><label1>ID</label1></th>
-              <!--DATOS OBLIGATORIOS-->
-              <th><label1><!--id_medico-->Medico que atiende</label1></th>
-              <th><label1><!--Nombre completo del paciente-->Nombre</label1></th>
-              <th><label1>Apellido paterno</label1></th>
-              <th><label1>Apellido materno</label1></th>
-              <th><label1>Fecha de nacimiento</label1></th>
+              <th><label1>ID Expediente</label1></th>
+              <th><label1> Médico </label1></th>
+              <th><label1> Expediente </label1></th>
+              <th><label1> Nombre</label1></th>
+              <th><label1>Ap.paterno</label1></th>
+              <th><label1>Ap.materno</label1></th>
+              <th><label1>Fecha nacimiento</label1></th>
               <!--DATOS OOPCIONALES-->
-              <th><label1>Enfermedades cronicas</label1></th>
+              <th><label1>Antec. familiares</label1></th>
               <th><label1>Alergias</label1></th>
-              <th><label1>Enfermedades_cronicas</label1></th>
-              <th><label1>Antecedentes familiares</label1></th>
-              <th><label1>Editar</label1></th>
+              <th><label1>Enf.crónicas</label1></th>
+             
           </tr>
           </thead>
-          <tr>
-              <td>-</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-          </tr>
+        
           <tbody>
-            {%for alb in tbcita %}
+            {%for alb in tbpacientes %}
             <tr>
                 <td>{{ alb.0 }}</td>
                 <td>{{ alb.1 }}</td>
@@ -96,8 +82,8 @@
                 <td>{{ alb.8 }}</td>
                 <td>{{ alb.9 }}</td>
                 <td>{{ alb.10 }}</td>
-                <td>
-
+                <td>  <a href="/actualizarPaciente/{{alb.0}}"><button type="button"> ACTUALIZAR </button></a></td>
+                <td>  <a href="/veliminar/{{alb.0}}"><button type="button"> ELIMINAR </button></a></td>
                 </tr>
                 {%endfor %}
             </tbody>
