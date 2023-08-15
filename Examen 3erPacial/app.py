@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, redirect,url_for,flash,session,flash, Response #Importar libreria
 import bcrypt
+
+#Calculo de la edad
+from datetime import datetime
+
 #LOGIN
 from flask_login import LoginManager, login_user, logout_user, login_required
 
@@ -72,12 +76,12 @@ def login():
 
 
 @app.route('/menu_admin')
-#@login_required #Proteccion de rutas
+@login_required #Proteccion de rutas
 def menu_admin():
         return render_template('menu_admin.html')
 
 @app.route('/menu_usuario')
-#@login_required #Proteccion de rutas
+@login_required #Proteccion de rutas
 def menu_usuario():
         # Renderizar el panel de usuario
         return render_template('menu_usuario.html')
@@ -104,13 +108,15 @@ def guardarPaciente():
         _ap=request.form['AP']
         _am=request.form['AM']
         _fn=request.form['FN']
+        fn=datetime.strptime(_fn, '%Y-%m-&d').date()
+        _edad=calcualarEdad(fn)
         _af=request.form['AF']
         _al=request.form['AL']
         _ec=request.form['EC']
         #print(titulo,artista,anio)
         CS=mysql.connection.cursor()
-        CS.execute('insert into exp_paciente(id_medico,exp,nombre,ap,am,fecha_nac,antec_fam,alergias,enf_cronicas) values(%s,%s,%s,%s,%s,%s,%s,%s,%s)',
-                (_idmedico,_exp,_paciente,_ap,_am,_fn,_af,_al,_ec)) #Para ejecutar codigo sql, y pasamos parametros
+        CS.execute('insert into exp_paciente(id_medico,exp,nombre,ap,am,fecha_nac,antec_fam,alergias,enf_cronicas,edad) values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+                (_idmedico,_exp,_paciente,_ap,_am,_fn,_af,_al,_ec,_edad)) #Para ejecutar codigo sql, y pasamos parametros
         mysql.connection.commit()
 
         flash('Paciente registrado exitosamente') #este mnsj se imprime en el CRUD de albums
@@ -119,7 +125,7 @@ def guardarPaciente():
     c=mysql.connection.cursor()
     c.execute('select id_medico, concat (nombre, "",ap,"",am) as NombreCompleto from medico')
     medico=c.fetchall()
-    return render_template('expediente_paciente.html', medico=medico)
+    return render_template('expediente_paciente.html', medico=medico, _edad=_edad)
 
 @app.route('/guardarMedico', methods=['GET', 'POST'])
 def guardarMedico():
@@ -374,6 +380,12 @@ def eliminarMedico(id):
 
     flash('Medico eliminado')
     return redirect(url_for('consultarMedico'))
+
+#Calculo de edad
+def calcualarEdad(date_birth):
+    factual=datetime.today()
+    edad=factual.year - date_birth.year -((factual.month,factual.day)<(date_birth.month,date_birth.day))
+    return edad
 
 # ERROR HTML PARA SOLICITUDES MAL FORMADAS (ERROR 400)
 @app.errorhandler(400)
