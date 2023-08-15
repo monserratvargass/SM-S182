@@ -61,8 +61,8 @@
                 <td>{{ alb.8 }}</td>
                 <td>{{ alb.9 }}</td>
                 <td>{{ alb.10 }}</td>
-                <td>  <a href="/actualizarPaciente/{{alb.0}}"><button type="button"> ACTUALIZAR </button></a></td>
-                <td>  <a href="/veliminar/{{alb.0}}"><button type="button"> ELIMINAR </button></a></td>
+                <td><a href="/actualizarPaciente/{{alb.0}}" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
+                  <a href="/veliminar/{{alb.0}}" class="btn btn-secondary"><i class="bi bi-trash"></i></a></td>
                 </tr>
                 {%endfor %}
             </tbody>
