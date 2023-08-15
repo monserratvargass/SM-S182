@@ -99,6 +99,13 @@
   </form>
 </div>
 </body>
+{%with mensajes=get_flashed_messages()%}
+  {% if mensajes%}
+    {%for msj in mensajes%}
+    <script>Swal.fire('Listo!','Medico actualizado','success')</script>
+    {%endfor%}
+  {%endif%}
+  {%endwith%}
 </div>
 <div>
   <p></p>

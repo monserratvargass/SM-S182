@@ -4,22 +4,21 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <meta charset="UTF-8">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename= 'css/main.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<div class="containerM">
+    
+    <div class="containerM">
     
 
-<title>Inicio</title>
+    <title>Inicio</title>
 
-<h1>INICIO</h1>
+    <h1>INICIO</h1>
 
-<h2>Bienvenido, {{current_user.fullname}}</h2>
-<br>
-<a href="menu_usuario" class="button1">ingresar</a>
-<br>
-<a href="logout" class="button1">Logout</a>
+    <h2>Bienvenido, {{current_user.fullname}}</h2>
+    <br>
+    <a href="menu_usuario" class="button1">ingresar</a>
+    <br>
+    <a href="logout" class="button1">Logout</a>
 
 
 <body>
@@ -27,14 +26,14 @@
 </body>
 {%with mensajes=get_flashed_messages()%}
 {%if mensajes%}
-{%for msj in mensajes%}
+    {%for msj in mensajes%}
 
-<script>Swal.fire({
-    "title":"Listo!",
-    "text":"{{msj}}",
-    "icon":"success"})</script>
+    <script>Swal.fire({
+        "title":"Listo!",
+        "text":"{{msj}}",
+        "icon":"success"})</script>
 
-{%endfor%}
+    {%endfor%}
 {%endif%}
 {%endwith%}
 

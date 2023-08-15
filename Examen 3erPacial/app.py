@@ -72,12 +72,12 @@ def login():
 
 
 @app.route('/menu_admin')
-@login_required #Proteccion de rutas
+#@login_required #Proteccion de rutas
 def menu_admin():
         return render_template('menu_admin.html')
 
 @app.route('/menu_usuario')
-@login_required #Proteccion de rutas
+#@login_required #Proteccion de rutas
 def menu_usuario():
         # Renderizar el panel de usuario
         return render_template('menu_usuario.html')
@@ -175,11 +175,11 @@ def diagnosticoPaciente():
 
     if request.method=='POST': #Peticiones del usuario a traves del metodo POST
         _idexp=request.form['pac']
-        _sint=request.form['sintomas']
-        _dx=request.form['dx']
-        _med=request.form['med']
-        _indicaciones=request.form['indicaciones']
-        _estudios=request.form['estudios']
+        _sint=request.form['user_sint']
+        _dx=request.form['user_dx']
+        _med=request.form['user_med']
+        _indicaciones=request.form['user_ind'] #Este es tratamiento
+        _estudios=request.form['user_TS']
         CS=mysql.connection.cursor()
         CS.execute('insert into diagnostico(id_exploracion,sintomas,dx,medicamento,tratamiento,solic_estudios) values(%s,%s,%s,%s,%s,%s)',
                    (_idexp,_sint,_dx,_med,_indicaciones,_estudios)) #Para ejecutar codigo sql, y pasamos parametros
@@ -268,7 +268,7 @@ def eliminarPaciente(id):
       eliminar=mysql.connection.cursor()
       eliminar.execute('select id_exploracion from exploracion where id_expediente =%s',(id,))
       id_exp=eliminar.fetchone()
-      eliminar.execute('delete from diagnostico where id_exploracion = %s',(id_exp))
+      eliminar.execute('delete from diagnostico where id_exploracion = %s',(id_exp,))
       eliminar.execute('delete from exploracion where id_expediente =%s',(id,))
       eliminar.execute('delete from exp_paciente where id_expediente = %s',(id,))
       mysql.connection.commit()
@@ -340,9 +340,8 @@ def borrarMedico(id):
 
 @app.route('/eliminarMedico/<id>',methods=['POST'])
 def eliminarMedico(id):
-    if request.method=='POST':
-     curDelete=mysql.connection.cursor()
-     curDelete.execute('delete from medico where id_medico=%s', (id)) 
+    curDelete=mysql.connection.cursor()
+    curDelete.execute('delete from medico where id_medico=%s', (id)) 
     mysql.connection.commit() #Para actualizar
 
     flash('Medico eliminado')
