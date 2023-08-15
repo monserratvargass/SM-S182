@@ -14,7 +14,6 @@
 </header>
     <div>
     <style>
-      
       </style>
 </header>
 <nav></nav>
@@ -26,7 +25,7 @@
     <ul>
       
         <label for="medico">Selecciona un medico</label>
-        <select id="medico" name="medico" required>
+        <select id="medico" name="medico">
           {% for medicos in medico %}
               <option value="{{ medicos.0 }}">{{ medicos.1 }}</option>
           {% endfor %}
@@ -71,15 +70,15 @@
       <p></p>
       
         <label for="AF">Antecedentes familiares:</label>
-        <input type="text" name="AF" required/>
+        <input type="text" name="AF" />
 
         <p></p>
      
         <label for="AL">Alergias:</label>
-        <input type="text" name="AL" required/>
+        <input type="text" name="AL" />
       <p></p>
         <label for="EC">Enfermedades crónicas:</label>
-        <input type="text" name="EC" required/>
+        <input type="text" name="EC" />
     
       <p></p>
       <p></p>
@@ -94,14 +93,15 @@
     </ul>
   </form>
 </div>
-</body>
 {%with mensajes=get_flashed_messages()%}
 {% if mensajes%}
   {%for msj in mensajes%}
-  <script>Swal.fire('Listo!','Expediente del paciente registrado','success')</script>
+  <script>Swal.fire('Listo!','Registro exitoso','success')</script>
   {%endfor%}
 {%endif%}
 {%endwith%}
+
+</body>
 </div>
 <div>
   <p></p>

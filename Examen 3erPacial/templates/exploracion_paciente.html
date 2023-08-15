@@ -24,7 +24,7 @@
     <ul>
       
       <label for="medico">Selecciona paciente</label>
-      <select id="pac" name="pac" required>
+      <select id="pac" name="pac">
         {% for pacientes in pac %}
             <option value="{{ pacientes.0 }}">{{ pacientes.1 }}</option>
         {% endfor %}
@@ -36,17 +36,17 @@
       <p></p>
       
       <label for="peso">Peso:</label>
-        <input type="number" name="user_peso" required/>
+        <input type="decimal" name="user_peso" required/>
       
       <p></p>
 
         <label for="altura">Altura:</label>
-        <input type="number" name="user_altura" required/>
+        <input type="decimal" name="user_altura" required/>
      
       <p></p>
       
         <label for="temperatura">Temperatura:</label>
-        <input type="number" name="user_temperatura" required/>
+        <input type="decimal" name="user_temperatura" required/>
       
       <p></p>
       

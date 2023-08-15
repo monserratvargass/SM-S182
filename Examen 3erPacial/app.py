@@ -375,6 +375,59 @@ def eliminarMedico(id):
     flash('Medico eliminado')
     return redirect(url_for('consultarMedico'))
 
+#PDF
+@app.route('/generarR_pdf')
+def generar_pdf():
+    curSelect = mysql.connection.cursor()
+    curSelect.execute('SELECT medico.nombre AS medico_nombre,medico.ap AS medico_ap,medico.am AS medico_am,medico.ced_prof AS medico_ced_prof,exp_paciente.nombre AS paciente_nombre,exp_paciente.ap AS paciente_ap,exp_paciente.am AS paciente_am,exp_paciente.fecha_nac AS paciente_fecha_nac,exp_paciente.alergias AS paciente_alergias,diagnostico.dx AS diagnostico_dx,diagnostico.medicamento AS diagnostico_medicamento,diagnostico.tratamiento AS diagnostico_tratamiento,diagnostico.solic_estudios AS diagnostico_solic_estudios,exploracion.fecha_cita AS exploracion_fecha_cita,exploracion.peso AS exploracion_peso,exploracion.altura AS exploracion_altura,exploracion.temperatura AS exploracion_temperatura,exploracion.frec_cardiaca AS exploracion_frec_cardiaca,exploracion.saturacion_ox AS exploracion_saturacion_ox,exploracion.glucosa AS exploracion_glucosa FROM exp_paciente INNER JOIN medico ON exp_paciente.id_medico = medico.id_medico INNER JOIN exploracion ON exploracion.id_expediente = exp_paciente.id_expediente INNER JOIN diagnostico ON exploracion.id_exploracion = diagnostico.id_exploracion order by medico.nombre')
+
+    consulta = curSelect.fetchall()
+
+    buffer = BytesIO()
+
+    c = canvas.Canvas(buffer, pagesize=letter)
+
+    width, height = letter
+    x, y = 50, height - 100
+
+    c.setFont('Helvetica-Bold', 20)
+    c.drawCentredString(width / 2, y, "RECETA MEDICA")
+    y -= 30
+
+    c.setFont('Helvetica', 12)
+
+    for edpac in consulta:
+        c.drawString(400, y - 300, f"Medico: {edpac[0]} {edpac[1]} {edpac[2]}")
+        c.drawString(420, y - 320, f"Cedula Profesiona: {edpac[3]}")
+        c.drawString(50, y - 40, f"Nombre: {edpac[4]} {edpac[5]} {edpac[6]}")
+        c.drawString(350, y - 40, f"Fecha Nacimiento: {edpac[7]}")
+        c.drawString(50, y - 60, f"Alergias: {edpac[8]}")
+        c.drawString(350, y - 60, f"Diagnóstico: {edpac[9]}")
+        c.drawString(220, y - 100, f"Tratamiento")
+        c.drawString(220, y - 140, f"{edpac[10]}")
+        c.drawString(220, y - 240, f"Recomendaciones: {edpac[11]}")
+        c.drawString(220, y - 280, f"Solicitud de estudios: {edpac[12]}")
+        c.drawString(400, y - 10, f"Fecha: {edpac[13]}")
+        c.drawString(50, y - 140, f"Somatometria")
+        c.drawString(50, y - 160, f"Peso: {edpac[14]}")
+        c.drawString(50, y - 180, f"Altura: {edpac[15]}")
+        c.drawString(50, y - 200, f"Signos vitales")
+        c.drawString(50, y - 220, f"Temperatura: {edpac[16]}")
+        c.drawString(50, y - 240, f"Fc: {edpac[17]}")
+        c.drawString(50, y - 260, f"Sp02: {edpac[18]}")
+        c.drawString(50, y - 280, f"Glucosa: {edpac[19]}")
+    
+        c.showPage()
+    c.save()
+    
+    pdf_content = buffer.getvalue()
+    buffer.close()
+
+    response = Response(pdf_content, content_type='application/pdf')
+    response.headers['Content-Disposition'] = 'attachment; filename=receta.pdf'
+    return response
+
+
 # ERROR HTML PARA SOLICITUDES MAL FORMADAS (ERROR 400)
 @app.errorhandler(400)
 def status_400(error):
@@ -389,10 +442,16 @@ def status_401(error):
 def status_404(eror):
     return "<h1> Página no encontrada </h1>", 404
 
+#ERROR HTML PARA URL NO ENCONTRADAS (ERROR 405)
+def status_405(error):
+    return redirect(url_for('logout'))
+
 #Ejecucion del servidor
 if __name__=='__main__':
-    #app.run()
+    app.secret_key = 'clave_secreta'
     app.config.from_object(config['development'])
+    app.register_error_handler(400, status_400)
     app.register_error_handler(401, status_401)
     app.register_error_handler(404, status_404)
+    app.register_error_handler(405, status_405)
     app.run(port=5005,debug=True) #Procurar que sea un puerto desocupado, debug(prendido)
