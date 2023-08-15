@@ -28,13 +28,28 @@
 <H4> Consultar cita</H4>
 <p></p>     
 <p></p>
+{%with mensajes=get_flashed_messages()%}
+{% if mensajes%}
+  {%for msj in mensajes%}
+  <h3> </h3>
+  <h3>  </h3>
+  <!--<div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <strong>{{msj}}</strong> 
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>-->
+
+  <script>Swal.fire(  '',  '{{msj}}',  '')</script>
+  {%endfor%}
+{%endif%}
+{%endwith%}
+
         <label for="nombre">Nombre paciente:</label>
         <input type="text" id="nombre" name="user_nombre" required />
       
         <p></p>
       
         <ul>
-          <table>
+          <table class="table table-striped">
             <thead>
             <tr>
                 <th><label1>ID</label1></th>
@@ -43,7 +58,7 @@
                 <th><label1>Apellido Materno</label1></th>
                 <!--<th><label1>Nombre completo</label1></th> Opcion de nombre completo en lugar de que sea individual-->
                 <th><label1>Fecha de la cita</label1></th>
-                
+                <th><label1> Receta </label1></th>
             </tr>
             </thead>
             <tr>

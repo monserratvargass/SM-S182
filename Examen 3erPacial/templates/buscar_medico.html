@@ -27,13 +27,27 @@
         <h4>Búsqueda de médicos</h4> 
         <p></p>
       
+        {%with mensajes=get_flashed_messages()%}
+        {% if mensajes%}
+          {%for msj in mensajes%}
+          <h3> </h3>
+          <h3>  </h3>
+          <!--<div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <strong>{{msj}}</strong> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>-->
+    
+          <script>Swal.fire(  '',  '{{msj}}',  '')</script>
+          {%endfor%}
+        {%endif%}
+      {%endwith%}
 
         <label for="nombre">Nombres(s):</label>
         <input type="text" name="user_nombre" required/>
       
      
         <ul>
-          <table>
+          <table class="table table-striped">
             <thead>
             <tr>
                 <th><label1>ID</label1></th>
@@ -43,8 +57,8 @@
                 <th><label1>RFC</label1></th>
                 <th><label1>Cedula profesional</label1></th>
                 <th><label1>Correo</label1></th>
+                <th><label1>Contraseña</label1></th>
                 <th><label1>Rol</label1></th>
-                <th><label1>Acciones</label1></th>
             </tr>
             </thead>
             <tr>

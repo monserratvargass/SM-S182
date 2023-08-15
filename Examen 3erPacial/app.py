@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect,url_for,flash,session,flash, Response #Importar libreria
-
+import bcrypt
 #LOGIN
 from flask_login import LoginManager, login_user, logout_user, login_required
 
@@ -121,26 +121,31 @@ def guardarPaciente():
     medico=c.fetchall()
     return render_template('expediente_paciente.html', medico=medico)
 
-@app.route('/guardarMedico',methods=['GET','POST'])
+@app.route('/guardarMedico', methods=['GET', 'POST'])
 def guardarMedico():
-    if request.method=='POST': #Peticiones del usuario a traves del metodo POST
-        nombre=request.form['nombre']
-        ap=request.form['AP']
-        am=request.form['AM']
-        rfc=request.form['RFC']
-        cp=request.form['CP']
-        ce=request.form['CE']
-        Pass=request.form['pass']
-        rol=request.form['rol']
-        #print(titulo,artista,anio)
-        CS=mysql.connection.cursor()
-        CS.execute('insert into medico(nombre,ap,am,rfc,ced_prof,correo,contrasena,rol) values(%s,%s,%s,%s,%s,%s,%s,%s)',
-                   (nombre,ap,am,rfc,cp,ce,Pass,rol)) #Para ejecutar codigo sql, y pasamos parametros
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        ap = request.form['AP']
+        am = request.form['AM']
+        rfc = request.form['RFC']
+        cp = request.form['CP']
+        ce = request.form['CE']
+        contrasena_plana = request.form['pass']  # Contraseña en texto plano desde el formulario
+        rol = request.form['rol']
+
+        contrasena_hash = bcrypt.hashpw(contrasena_plana.encode('utf-8'), bcrypt.gensalt())
+
+        CS = mysql.connection.cursor()
+        CS.execute('INSERT INTO medico(nombre, ap, am, rfc, ced_prof, correo, contrasena, rol) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)',
+                   (nombre, ap, am, rfc, cp, ce, contrasena_hash, rol))
         mysql.connection.commit()
 
-    flash('Médico registrado exitosamente')
-    #return redirect(url_for('index')) #Reedireccionamiento a la vista index
-    return render_template('registrar_medico.html')
+        flash('Médico registrado exitosamente')
+
+        return render_template('registrar_medico.html')
+    else:
+        return render_template('registrar_medico.html')
+
 
 #En la exploracion del paciente tiene como ID foraneo al expediente del paciente
 @app.route('/exploracionPaciente',methods=['GET','POST'])
@@ -278,36 +283,59 @@ def eliminarPaciente(id):
     return redirect(url_for('consultarPaciente'))
 
 
-@app.route('/buscarMedico',methods=['GET','POST'])
+@app.route('/buscarMedico', methods=['GET', 'POST'])
 def buscarMedico():
-    Bnom=request.form.get('user_nombre')
-    curBusq=mysql.connection.cursor()
-    curBusq.execute('select * from medico where nombre LIKE %s', (f'%{Bnom}%',))
-    busqueda=curBusq.fetchall()
-    return render_template('buscar_medico.html', busqmed=busqueda)
+    if request.method == 'POST':
+        Bnom = request.form.get('user_nombre')
+        curBusq = mysql.connection.cursor()
+        curBusq.execute('select * from medico where nombre LIKE %s', (f'%{Bnom}%',))
+        busqueda = curBusq.fetchall()
+
+        if busqueda:  # Si se encontró información en la búsqueda
+            flash('Médico encontrado')
+        else:
+            flash('Médico no encontrado')
+
+        return render_template('buscar_medico.html', busqmed=busqueda)
+    else:
+        return render_template('buscar_medico.html', busqmed=[])  # Asegúrate de proporcionar una lista vacía aquí
+
 
 #Consultar medico que atiende, nombre completo del paciente, fecha nacimiento, 
 # datos opcionales: ec,alergias, antecedentes con parametro de busqueda de expediente
-@app.route('/buscarPaciente',methods=['GET','POST'])
+@app.route('/buscarPaciente', methods=['GET', 'POST'])
 def buscarPaciente():
-    Bexp=request.form.get('user_exp')
-    curBusq=mysql.connection.cursor()
-    curBusq.execute('select medico.nombre,medico.ap,medico.am, exp_paciente.exp, exp_paciente.nombre,exp_paciente.ap,exp_paciente.am, exp_paciente.fecha_nac, exp_paciente.antec_fam,exp_paciente.alergias,exp_paciente.enf_cronicas from exp_paciente inner join medico on exp_paciente.id_medico=medico.id_medico where exp LIKE %s', (f'%{Bexp}%',))
-    busqueda=curBusq.fetchall()
-    return render_template('buscar_paciente.html', busqpac=busqueda)
+    if request.method == 'POST':
+        Bexp = request.form.get('user_exp')
+        curBusq = mysql.connection.cursor()
+        curBusq.execute('select medico.nombre,medico.ap,medico.am, exp_paciente.exp, exp_paciente.nombre,exp_paciente.ap,exp_paciente.am, exp_paciente.fecha_nac, exp_paciente.antec_fam,exp_paciente.alergias,exp_paciente.enf_cronicas from exp_paciente inner join medico on exp_paciente.id_medico=medico.id_medico where exp LIKE %s', (f'%{Bexp}%',))
+        busqueda = curBusq.fetchall()
+
+        if busqueda:  # Si se encontró información en la búsqueda
+            flash('Paciente encontrado')
+        else:
+            flash('Paciente no encontrado')
+
+        return render_template('buscar_paciente.html', busqpac=busqueda)
+    else:
+        return render_template('buscar_medico.html', busqpac=[])
 
 #Consultar todas las citas que ha tenido el paciente, filtrada por el nombre del paciente y/o fecha de la cita
 #Unicamente debe aparecer nombre del paciente y la fecha de la cita
-@app.route('/consultarCita',methods=['GET','POST'])
+@app.route('/consultarCita', methods=['GET', 'POST'])
 def consultarCita():
-    Cnom=request.form.get('user_nombre')
-    curSelect=mysql.connection.cursor()
-    '''curSelect.execute('select id from persona where nombre=? ',(Cnom,))
-    consulta=curSelect.fetchone()'''
-    #if consulta:
-    curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exploracion.id_expediente=exp_paciente.id_expediente where exp_paciente.nombre LIKE %s',(f'%{Cnom}%',))
-    Ccitas=curSelect.fetchall()
-    return render_template('consultar_citas.html',tbcita=Ccitas)
+    Cnom = request.form.get('user_nombre')
+    curSelect = mysql.connection.cursor()
+    curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exploracion.id_expediente=exp_paciente.id_expediente where exp_paciente.nombre LIKE %s', (f'%{Cnom}%',))
+    Ccitas = curSelect.fetchall()
+
+    if Ccitas:
+        flash('Cita encontrada')
+    else:
+        flash('Cita no encontrada')
+
+    return render_template('consultar_citas.html', tbcita=Ccitas)
+
 
 @app.route('/consultarMedico',methods=['GET','POST'])
 def consultarMedico():
