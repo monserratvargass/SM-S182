@@ -26,7 +26,7 @@
     <ul>
 
       <label for="pac">Selecciona paciente</label>
-      <select id="pac" name="pac">
+      <select id="pac" name="pac" required>
         {% for pacientes in pac %}
             <option value="{{ pacientes.0 }}">{{ pacientes.2 }}</option>
         {% endfor %}

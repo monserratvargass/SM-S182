@@ -24,11 +24,11 @@
     <ul>
       
       <label for="medico">Selecciona paciente</label>
-      <select id="pac" name="pac">
+      <select id="pac" name="pac" required>
         {% for pacientes in pac %}
             <option value="{{ pacientes.0 }}">{{ pacientes.1 }}</option>
         {% endfor %}
-    </select>
+      </select>
 
         <label for="fecha">Fecha cita:</label>
         <input type="date" name="user_fecha" required/>

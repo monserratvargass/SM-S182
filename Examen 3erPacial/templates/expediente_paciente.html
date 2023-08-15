@@ -26,7 +26,7 @@
     <ul>
       
         <label for="medico">Selecciona un medico</label>
-        <select id="medico" name="medico">
+        <select id="medico" name="medico" required>
           {% for medicos in medico %}
               <option value="{{ medicos.0 }}">{{ medicos.1 }}</option>
           {% endfor %}
@@ -71,15 +71,15 @@
       <p></p>
       
         <label for="AF">Antecedentes familiares:</label>
-        <input type="text" name="AF" />
+        <input type="text" name="AF" required/>
 
         <p></p>
      
         <label for="AL">Alergias:</label>
-        <input type="text" name="AL" />
+        <input type="text" name="AL" required/>
       <p></p>
         <label for="EC">Enfermedades crónicas:</label>
-        <input type="text" name="EC" />
+        <input type="text" name="EC" required/>
     
       <p></p>
       <p></p>
