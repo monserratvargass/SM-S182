@@ -39,6 +39,7 @@
               <th><label1>Ap.paterno</label1></th>
               <th><label1>Ap.materno</label1></th>
               <th><label1>Fecha nacimiento</label1></th>
+              <th><label1>Edad: </label1></th>
               <!--DATOS OOPCIONALES-->
               <th><label1>Antec. familiares</label1></th>
               <th><label1>Alergias</label1></th>
@@ -57,13 +58,14 @@
                 <td>{{ alb.4 }}</td>
                 <td>{{ alb.5 }}</td>
                 <td>{{ alb.6 }}</td>
+                <td>{{ alb.10 }}</td>
                 <td>{{ alb.7 }}</td>
                 <td>{{ alb.8 }}</td>
                 <td>{{ alb.9 }}</td>
-                <td>{{ alb.10 }}</td>
+                
                 <td><a href="/actualizarPaciente/{{alb.0}}" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
                   <a href="/veliminar/{{alb.0}}" class="btn btn-secondary"><i class="bi bi-trash"></i></a></td>
-                  <td><button type="button" onclick="location.href='/generarR_pdf'">REIMPRIMIR RECETA</button></td>
+                  <td><button type="button" onclick="location.href='/generarR_pdf/{{alb.0}}'">REIMPRIMIR RECETA</button></td>
                 </tr>
                 {%endfor %}
             </tbody>

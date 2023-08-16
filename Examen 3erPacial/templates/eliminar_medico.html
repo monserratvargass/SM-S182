@@ -21,7 +21,7 @@
     <form action="/eliminarMedico/{{ id }}" method="post">
         <ul>
             <label for="nombre">Nombres(s):</label>
-            <input type="text" id="nombre" name="user_nombre" value="{{ bmed.1 }}" required/>
+            <input type="text" id="nombre" name="user_nombre" value="{{ bmed.1 }}" disabled/>
           
           <p></p>
           
@@ -51,7 +51,7 @@
           <p></p>
           
             <label for="pass">Contraseña:</label>
-            <input type="password" id="pass" name="user_pass" value="{{ bmed.7 }}" required/>
+            <input type="password" id="pass" name="contrasena" value="{{ bmed.7 }}" required/>
           
           <p></p>
          

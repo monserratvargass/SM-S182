@@ -62,9 +62,11 @@ def login():
 
         if rol_resultado is not None and rol_resultado[0] == "admin":
             session['rfc'] = resultado[0]
+            print(session['rfc'])
             return render_template('menu_admin.html')
         else:
             session['rfc'] = resultado[0]
+            print(session['rfc'])
             return render_template('menu_usuario.html')
     else:
         flash('RFC o contraseña incorrectos. Intente nuevamente.', 'error')
@@ -350,7 +352,7 @@ def consultarMedico():
 @app.route('/consultarPaciente',methods=['GET','POST'])
 def consultarPaciente():
     curSelect=mysql.connection.cursor()
-    curSelect.execute('select * from exp_paciente')
+    curSelect.execute('select * , TIMESTAMPDIFF(year,fecha_nac,now()) from exp_paciente')
     consulta=curSelect.fetchall()
     return render_template('consultar_paciente.html', tbpacientes=consulta)
 
@@ -369,20 +371,36 @@ def borrarMedico(id):
 
     return render_template('eliminar_medico.html', bmed=consultaID,id=id)
 
-@app.route('/eliminarMedico/<id>',methods=['POST'])
+@app.route('/eliminarMedico/<id>', methods=['POST'])
 def eliminarMedico(id):
-    curDelete=mysql.connection.cursor()
-    curDelete.execute('delete from medico where id_medico=%s', (id)) 
-    mysql.connection.commit() #Para actualizar
+    contrasena_plana = request.form['contrasena']  # Contraseña en texto plano proporcionada por el usuario
 
-    flash('Medico eliminado')
+    curSelect = mysql.connection.cursor()
+    curSelect.execute('SELECT contrasena FROM medico WHERE id_medico = %s', (id,))
+    resultado = curSelect.fetchone()
+
+    if resultado:
+        contrasena_hash = resultado[0].encode('utf-8')  # Codifica el hash en bytes
+
+        if bcrypt.checkpw(contrasena_plana.encode('utf-8'), contrasena_hash):
+            curDelete = mysql.connection.cursor()
+            curDelete.execute('DELETE FROM medico WHERE id_medico = %s', (id,))
+            mysql.connection.commit()
+
+            flash('Médico eliminado exitosamente')
+        else:
+            flash('Contraseña incorrecta')
+    else:
+        flash('Médico no encontrado')
+
     return redirect(url_for('consultarMedico'))
 
+
 #PDF
-@app.route('/generarR_pdf')
-def generar_pdf():
+@app.route('/generarR_pdf/<id>')
+def generar_pdf(id):
     curSelect = mysql.connection.cursor()
-    curSelect.execute('SELECT medico.nombre AS medico_nombre,medico.ap AS medico_ap,medico.am AS medico_am,medico.ced_prof AS medico_ced_prof,exp_paciente.nombre AS paciente_nombre,exp_paciente.ap AS paciente_ap,exp_paciente.am AS paciente_am,exp_paciente.fecha_nac AS paciente_fecha_nac,exp_paciente.alergias AS paciente_alergias,diagnostico.dx AS diagnostico_dx,diagnostico.medicamento AS diagnostico_medicamento,diagnostico.tratamiento AS diagnostico_tratamiento,diagnostico.solic_estudios AS diagnostico_solic_estudios,exploracion.fecha_cita AS exploracion_fecha_cita,exploracion.peso AS exploracion_peso,exploracion.altura AS exploracion_altura,exploracion.temperatura AS exploracion_temperatura,exploracion.frec_cardiaca AS exploracion_frec_cardiaca,exploracion.saturacion_ox AS exploracion_saturacion_ox,exploracion.glucosa AS exploracion_glucosa FROM exp_paciente INNER JOIN medico ON exp_paciente.id_medico = medico.id_medico INNER JOIN exploracion ON exploracion.id_expediente = exp_paciente.id_expediente INNER JOIN diagnostico ON exploracion.id_exploracion = diagnostico.id_exploracion order by medico.nombre')
+    curSelect.execute('SELECT medico.nombre AS medico_nombre,medico.ap AS medico_ap,medico.am AS medico_am,medico.ced_prof AS medico_ced_prof,exp_paciente.nombre AS paciente_nombre,exp_paciente.ap AS paciente_ap,exp_paciente.am AS paciente_am,exp_paciente.fecha_nac AS paciente_fecha_nac,exp_paciente.alergias AS paciente_alergias,diagnostico.dx AS diagnostico_dx,diagnostico.medicamento AS diagnostico_medicamento,diagnostico.tratamiento AS diagnostico_tratamiento,diagnostico.solic_estudios AS diagnostico_solic_estudios,exploracion.fecha_cita AS exploracion_fecha_cita,exploracion.peso AS exploracion_peso,exploracion.altura AS exploracion_altura,exploracion.temperatura AS exploracion_temperatura,exploracion.frec_cardiaca AS exploracion_frec_cardiaca,exploracion.saturacion_ox AS exploracion_saturacion_ox,exploracion.glucosa AS exploracion_glucosa FROM exp_paciente INNER JOIN medico ON exp_paciente.id_medico = medico.id_medico INNER JOIN exploracion ON exploracion.id_expediente = exp_paciente.id_expediente INNER JOIN diagnostico ON exploracion.id_exploracion = diagnostico.id_exploracion where exp_paciente.id_expediente = %s order by medico.nombre',(id,))
 
     consulta = curSelect.fetchall()
 
