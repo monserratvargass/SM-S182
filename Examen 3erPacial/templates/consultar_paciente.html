@@ -63,6 +63,7 @@
                 <td>{{ alb.10 }}</td>
                 <td><a href="/actualizarPaciente/{{alb.0}}" class="btn btn-secondary"><i class="bi bi-pencil-square"></i></a>
                   <a href="/veliminar/{{alb.0}}" class="btn btn-secondary"><i class="bi bi-trash"></i></a></td>
+                  <td><button type="button" onclick="location.href='/generarR_pdf'">REIMPRIMIR RECETA</button></td>
                 </tr>
                 {%endfor %}
             </tbody>

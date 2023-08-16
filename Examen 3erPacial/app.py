@@ -324,17 +324,20 @@ def buscarPaciente():
 #Unicamente debe aparecer nombre del paciente y la fecha de la cita
 @app.route('/consultarCita', methods=['GET', 'POST'])
 def consultarCita():
-    Cnom = request.form.get('user_nombre')
-    curSelect = mysql.connection.cursor()
-    curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exploracion.id_expediente=exp_paciente.id_expediente where exp_paciente.nombre LIKE %s', (f'%{Cnom}%',))
-    Ccitas = curSelect.fetchall()
+    if request.method == 'POST':
+        Cnom = request.form.get('user_nombre')
+        curSelect = mysql.connection.cursor()
+        curSelect.execute('select exp_paciente.id_expediente,exp_paciente.nombre,exp_paciente.ap, exp_paciente.am,exploracion.fecha_cita from exp_paciente inner join exploracion on exploracion.id_expediente=exp_paciente.id_expediente where exp_paciente.nombre LIKE %s', (f'%{Cnom}%',))
+        Ccitas = curSelect.fetchall()
 
-    if Ccitas:
-        flash('Cita encontrada')
+        if Ccitas:
+            flash('Cita encontrada')
+        else:
+            flash('Cita no encontrada')
+
+        return render_template('consultar_citas.html', tbcita=Ccitas)
     else:
-        flash('Cita no encontrada')
-
-    return render_template('consultar_citas.html', tbcita=Ccitas)
+        return render_template('consultar_citas.html', tbcita=[])
 
 
 @app.route('/consultarMedico',methods=['GET','POST'])
@@ -391,12 +394,13 @@ def generar_pdf():
     x, y = 50, height - 100
 
     c.setFont('Helvetica-Bold', 20)
-    c.drawCentredString(width / 2, y, "RECETA MEDICA")
+    c.drawCentredString(width / 2, y, "")
     y -= 30
 
     c.setFont('Helvetica', 12)
 
     for edpac in consulta:
+        c.drawString(270, y - 0, f"RECETA MEDICA")
         c.drawString(400, y - 300, f"Medico: {edpac[0]} {edpac[1]} {edpac[2]}")
         c.drawString(420, y - 320, f"Cedula Profesiona: {edpac[3]}")
         c.drawString(50, y - 40, f"Nombre: {edpac[4]} {edpac[5]} {edpac[6]}")
@@ -416,6 +420,8 @@ def generar_pdf():
         c.drawString(50, y - 240, f"Fc: {edpac[17]}")
         c.drawString(50, y - 260, f"Sp02: {edpac[18]}")
         c.drawString(50, y - 280, f"Glucosa: {edpac[19]}")
+
+        c.line(70, y -70, width -70, y -70)
     
         c.showPage()
     c.save()
